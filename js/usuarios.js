@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         data.result.forEach(user => {// Itera sobre los usuarios y crea las filas de la tabla data es el objeto recibido result la propiedad que es un array con los datos
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>${user.id}</td>
+                <td>${user.id_usuarios}</td>
                 <td>${user.usuario}</td>
                 <td>${user.email}</td>
                 <td>${user.password}</td>
