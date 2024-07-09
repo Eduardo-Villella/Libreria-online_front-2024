@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 if (result.success) {
                     localStorage.setItem('token', result.token);
                     alert('Perfil guardado con éxito');
-                    window.location.href = 'productos.html';
+                    window.location.href = 'dashboard.html';
                 } else {
                     throw new Error('Error al guardar el perfil');
                 }
