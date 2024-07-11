@@ -43,7 +43,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     if (validateEmail() && validatePassword()) {
         console.log('Validaciones de formulario pasadas, solicitando configuración del backend...');
 
-        fetch(`http://localhost:3000/api/config`)
+        fetch(`http://localhost:3000/api/config`)//remplazar http://34.46.27.106:3000 por http://localhost:3000
             .then(response => {
                 console.log('login.js: Respuesta recibida del endpoint /api/config:', response);
                 if (!response.ok) {

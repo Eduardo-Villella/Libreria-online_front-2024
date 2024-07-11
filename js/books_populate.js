@@ -97,7 +97,7 @@ async function loadCatalog() {
         const cardTemplate = await loadCardTemplate();
         console.log('Card template loaded:', cardTemplate);
 
-        const response = await fetch('http://localhost:3000/api/books');  // Reemplazar con la URL real de la API
+        const response = await fetch('http://localhost:3000/api/books');  // Reemplazar con la URL real de la API http://34.46.27.106:3000 = http://localhost:3000 reemplazar
         if (!response.ok) {
             throw new Error('Error al cargar el catálogo');
         }

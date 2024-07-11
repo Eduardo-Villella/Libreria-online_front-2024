@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             throw new Error('1 en perfil: No hay token disponible');
         }
 
-        const configResponse = await fetch('http://localhost:3000/api/config');
+        const configResponse = await fetch('http://localhost:3000/api/config');//remplazar http://34.46.27.106:3000 por http://localhost:3000
         if (!configResponse.ok) {
             throw new Error('en perfil js  error:  Error en la respuesta del servidor de configuración');
         }

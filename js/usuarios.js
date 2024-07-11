@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         headers.append('Authorization', `Bearer ${token}`);
         */
         
-        const response = await fetch('http://localhost:3000/api/users/', {// Realizo la solicitud al backend para obtener todos los usuarios
+        const response = await fetch('http://localhost:3000/api/users/', {// Realizo la solicitud al backend para obtener todos los usuarios//remplazar http://34.46.27.106:3000 por http://localhost:3000
             method: 'GET',
             //headers: headers// Para admin
         });

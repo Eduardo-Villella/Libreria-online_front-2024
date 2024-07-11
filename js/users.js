@@ -1,4 +1,4 @@
-const baseUrl = 'http://localhost:3000/api';
+const baseUrl = 'http://localhost:3000/api';//remplazar http://34.46.27.106:3000 por http://localhost:3000
 const usersEndpoint = `${baseUrl}/users`;
 
 // Fetch all users

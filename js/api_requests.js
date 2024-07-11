@@ -1,4 +1,5 @@
-const serverUrl = 'http://34.46.27.106:3000';
+//const serverUrl = 'http://34.46.27.106:3000';
+const serverUrl = 'http://localhost:3000';// Cambio base por server Anterior linea era: const baseUrl = 'http://localhost:3000/api';
 const baseUrl = `${serverUrl}/api`;
 const booksEndpoint = `${baseUrl}/books`;
 const categoriesEndpoint = `${baseUrl}/categories`;
