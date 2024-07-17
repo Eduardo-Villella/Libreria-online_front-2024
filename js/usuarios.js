@@ -61,3 +61,36 @@ document.addEventListener('DOMContentLoaded', async function () {
         alert('Hubo un problema al cargar los usuarios. Inténtalo de nuevo.');
     }
 });
+
+/* ejemplo pára validar y requerir datos */
+/*
+<form id="registrationForm">
+  <input type="text" name="usuario" id="usuario" required>
+  <input type="email" name="email" id="email" required>
+  <input type="password" name="password" id="password" required>
+  <input type="text" name="nombre" id="nombre">
+  <input type="text" name="apellido" id="apellido">
+  <input type="date" name="fecha_nacimiento" id="fecha_nacimiento">
+  <input type="text" name="telefono" id="telefono">
+  <input type="text" name="direccion" id="direccion">
+  <input type="text" name="ciudad" id="ciudad">
+  <input type="text" name="provincia" id="provincia">
+  <input type="text" name="pais" id="pais">
+  <input type="text" name="codigo_postal" id="codigo_postal">
+  <button type="submit">Register</button>
+</form>
+
+<script>
+document.getElementById('registrationForm').addEventListener('submit', function(event) {
+  // Realizar validaciones adicionales aquí
+  const usuario = document.getElementById('usuario').value;
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  
+  if (!usuario || !email || !password) {
+    alert('Usuario, email y password son obligatorios.');
+    event.preventDefault(); // Prevenir el envío del formulario
+  }
+});
+</script>
+*/

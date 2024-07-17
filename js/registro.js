@@ -5,7 +5,6 @@ const usuario = document.getElementById('usuario');
 const errorUsuario = document.getElementById('errorUsuario');
 usuario.addEventListener('blur', validateUsuario, { passive: true });// blur metodo para la escucha dinamica al cambiar campo: presenta el error si lo hay. Se agrega { passive: true } como tercer parmetro para prevenir que el navegador detenga el normal flujo
 
-
 function validateUsuario() {
     const usuarioValue = usuario.value.trim();
     if (usuarioValue.length < 5 || !/^[\wñÑ\s._-]+$/.test(usuarioValue) || /\s{2,}/.test(usuarioValue)) {// Regex (!/^[\wñÑ\s._-]+$/) -regular expresion- su uso es excelente para determinar filtros
@@ -79,21 +78,21 @@ document.getElementById('registroForm').addEventListener('submit', function(even
     event.preventDefault(); // Previene el envio del formulario por defecto
 
     if (validateUsuario() && validateEmail() && validatepassword() && validateConfirmpassword()) {
-        console.log('Validaciones de formulario pasadas, solicitando configuración del backend...');
+        console.log('en pérfil.js: Validaciones de formulario pasadas, solicitando configuración del backend...');
 
-        fetch(`http://localhost:3000/api/config`)//remplazar http://34.46.27.106:3000 por http://localhost:3000
+        fetch(`http://localhost:3000/api/config`)
             .then(response => {
-                console.log('Respuesta recibida del endpoint /api/config:', response);
+                console.log('en pérfil.js: Respuesta recibida del endpoint /api/config:', response);
                 if (!response.ok) {
-                    throw new Error('Error en la respuesta del servidor de configuración');
+                    throw new Error('en pérfil.js: Error en la respuesta del servidor de configuración');
                 }
                 return response.json();
             })
 
             .then(config => {
-                console.log('Configuración recibida:', config);// BORRAR
+                console.log('en pérfil.js: Configuración recibida:', config);// BORRAR
                 const BACKEND_URL = config.backendUrl;
-                console.log('Backend URL:', BACKEND_URL);// BORRAR
+                console.log('en pérfil.js: Backend URL:', BACKEND_URL);// BORRAR
 
                 // Datos del formulario
                 const formData = {
@@ -101,10 +100,10 @@ document.getElementById('registroForm').addEventListener('submit', function(even
                     email: document.getElementById('email').value.trim(),
                     password: document.getElementById('password').value.trim()// Debe coincidir con lo esperado por el backend, revisar DB
                 };
-                console.log('Datos del formulario:', formData);// BORRAR
+                console.log('en pérfil.js: Datos del formulario:', formData);// BORRAR
 
                 // Envio del formulario al backend
-                return fetch(`${BACKEND_URL}/api/users/usuario/register`, {
+                return fetch(`${BACKEND_URL}/api/users/register`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -112,32 +111,76 @@ document.getElementById('registroForm').addEventListener('submit', function(even
                     body: JSON.stringify(formData)
                 });
             })
-
             .then(response => {
-                console.log('Respuesta recibida del endpoint de registro:', response);
-                if (!response.ok) {
-                    throw new Error('Error en la respuesta del backend de registro');
-
-                }
-                return response.json();
+                console.log('en perfil.js: Respuesta recibida del endpoint de registro:', response);
+                return response.json().then(data => ({
+                    status: response.status,
+                    body: data
+                }));
             })
-
             .then(data => {
-                console.log('1 Respuesta del backend en front:', data);// BORRAR una vez comprobado
-
-                if (data.success) {
-                    localStorage.setItem('token', data.token);
-                    alert('Usuario registrado exitosamente');// Muestra mensaje de exito
-                    window.location.href = 'login.html'; // Redirige tras el exito del registro
+                console.log('Respuesta del backend:', data);
+                if (data.body.success) {
+                    localStorage.setItem('token', data.body.token);
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Usuario registrado exitosamente',
+                        showConfirmButton: true,
+                        timer: 30000
+                    }).then(() => {
+                        window.location.href = 'perfil.html';
+                    });
 
                 } else {
-                    alert(`Luego de Registrar la devolucion dice: ${data.message}`); // Muestra mensaje de error recibido del backend si hay error
+                    if (data.body.success === false) {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'El email ya está registrado',
+                            text: 'Por favor, elija una opción:',
+                            allowEscapeKey: true,
+                            allowOutsideClick: true,
+                            showCancelButton: true,
+                            showDenyButton: true,
+                            confirmButtonText: 'Ir a login',
+                            denyButtonText: 'Probar otro email',
+                            cancelButtonText: 'Ir a productos',
+                            preConfirm: () => {
+                                window.location.href = 'login.html';
+                            },
+                            preDeny: () => {
+                                email.classList.add('is-invalid');
+                                errorEmail.textContent = 'Este email ya está registrado. Por favor, ingrese otro email.';
+                            }
+                        }).then((result) => {
+                            console.log('Resultado de dismiss:', result.dismiss);//borrar
+                            if (result.dismiss === Swal.DismissReason.esc || result.dismiss === Swal.DismissReason.backdrop) {
+                                    window.location.href = 'index.html';
+                                    
+                            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                                window.location.href = 'productos.html';
+                            }
+                        });
+
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error en el registro',
+                            text: data.body.message,
+                            confirmButtonText: 'OK'
+                        })
+                        
+                    }
                 }
             })
-            
+
             .catch(error => {
                 console.error('Error en el proceso de registro:', error);
-                alert('Hubo un problema con el registro. Inténtelo de nuevo.');// Aqui mostrar error que empieza en validator.js pasa a controller y lo dispara al front en .json
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Hubo un problema con el registro',
+                    text: 'Inténtelo de nuevo.',
+                    confirmButtonText: 'OK'
+                });
             });
 
     } else {
