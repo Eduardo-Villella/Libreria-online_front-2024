@@ -28,8 +28,9 @@
                 </form>
             </div>
             <div class="contenedor-header-autentificacion">
-                <a href="login.html">Acceso</a> /
-                <a href="registro.html">Registrese</a>
+                <button id="loginButton" onclick="window.location.href='login.html';">Acceso</button>
+                <button id="signInButton" onclick="window.location.href='registro.html';">Regístrese</button>
+                <button id="logoutButton">Cerrar Sesión</button>
             </div>
             <div class="contenedor-header-carrito">
                 <p class="signo-pesos">AR$ 0 <a href=""><i class="bi bi-cart-fill carrito"></i></p></a>
@@ -180,6 +181,7 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
     <script src="js/perfil.js"></script>
+    <script src="js/common.js"></script>
 </body>
 
 </html>

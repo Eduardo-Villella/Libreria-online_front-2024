@@ -34,11 +34,16 @@ a{
     width: 300px;
 }
 
-.contenedor-header-autentificacion a{
+.contenedor-header-autentificacion button{
     font-weight: bold;
+    padding-left: 3px; 
+    padding-right: 3px;
+    border-left: 6px;
+    border-right: 6px;
+    font-size: 80%; /* Reduccion del tamaño de la letra al 80% del tamaño original */
 }
 
-.contenedor-header-autentificacion a:hover{
+.contenedor-header-autentificacion button:hover{
     color: #E35164;
 }
 

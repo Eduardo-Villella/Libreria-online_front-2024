@@ -119,17 +119,38 @@ document.getElementById('registroForm').addEventListener('submit', function(even
                 }));
             })
             .then(data => {
-                console.log('Respuesta del backend:', data);
+                console.log('Respuesta del backend:', data);// borrar
                 if (data.body.success) {
                     localStorage.setItem('token', data.body.token);
                     Swal.fire({
                         icon: 'success',
                         title: 'Usuario registrado exitosamente',
-                        showConfirmButton: true,
-                        timer: 30000
-                    }).then(() => {
-                        window.location.href = 'perfil.html';
+                        text: 'Por favor, elija una opción:',
+                        allowEscapeKey: true,
+                        allowOutsideClick: true,
+                        showCancelButton: true,
+                        showDenyButton: true,
+                        confirmButtonText: 'Completa tu Perfil',
+                        denyButtonText: 'Login',
+                        cancelButtonText: 'Ver Productos',
+                        preConfirm: () => {
+                            window.location.href = 'perfil.html';
+                        },
+                        preDeny: () => {
+                            window.location.href = 'login.html';
+                        }
+
+                    }).then((result) => {
+                        console.log('Resultado de dismiss:', result.dismiss);//borrar
+                        if (result.dismiss === Swal.DismissReason.esc || result.dismiss === Swal.DismissReason.backdrop) {
+                                window.location.href = 'index.html';
+                                
+                        } else if (result.dismiss === Swal.DismissReason.cancel) {
+                            window.location.href = 'productos.html';
+                        }
+
                     });
+
 
                 } else {
                     if (data.body.success === false) {
@@ -151,6 +172,7 @@ document.getElementById('registroForm').addEventListener('submit', function(even
                                 email.classList.add('is-invalid');
                                 errorEmail.textContent = 'Este email ya está registrado. Por favor, ingrese otro email.';
                             }
+
                         }).then((result) => {
                             console.log('Resultado de dismiss:', result.dismiss);//borrar
                             if (result.dismiss === Swal.DismissReason.esc || result.dismiss === Swal.DismissReason.backdrop) {
@@ -159,6 +181,7 @@ document.getElementById('registroForm').addEventListener('submit', function(even
                             } else if (result.dismiss === Swal.DismissReason.cancel) {
                                 window.location.href = 'productos.html';
                             }
+
                         });
 
                     } else {
@@ -187,5 +210,6 @@ document.getElementById('registroForm').addEventListener('submit', function(even
         console.log('Validaciones de formulario fallidas');
     }
 
+    
 });
 
