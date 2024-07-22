@@ -16,6 +16,10 @@ a{
     color: black;
 }
 
+.swal2-container {
+    z-index: 3050; /* Asegura que SweetAlert este por encima de otros elementos */
+}
+
 /* HEADER */
 
 .contenedor-header{
@@ -71,7 +75,6 @@ a{
 }
 
 /* MAIN */
-
 
 .contenedor-carrusel,.carrusel-item{
     height: 700px;
@@ -158,6 +161,51 @@ a{
     height: 100px;
 }
 
+/* PERFIL */
+
+input[type="date" i] {
+    font-family: monospace;
+    padding-inline-start: 1px;
+    cursor: default;
+    overflow: hidden;
+    padding: .375rem .75rem;
+    color: blue;
+    display: ruby-text !important;
+}
+
+/* LOGIN - REGISTRO : ojo en contraseña */
+
+.input-container {
+    position: relative;
+    width: 100%;
+}
+
+.input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+#password, #confirmPassword {
+    width: 100%;
+}
+
+#togglePassword, #toggleConfirmPassword {
+    position: absolute;
+    top: 55%;
+    right: 0.5rem; /* Ajusta el espacio según sea necesario */
+    transform: translateY(-46%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: rgb(161, 158, 158);
+    z-index: 1; /* Asegúrate de que el ícono esté por encima del campo */
+    padding-right: 0.018rem; /* Espacio para el ícono */
+}
+
+#passwordIcon, #confirmPasswordIcon {
+    font-size: 1.2rem; /* Ajusta el tamaño del ícono si es necesario */
+}
+
 /* FOOTER */
 
 .footer{
@@ -230,6 +278,7 @@ a{
 }
 
 /* Cards Productos */
+
 .product-wap { 
     box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.10);
 }
@@ -279,6 +328,7 @@ a{
 
 
 /* RESPONSIVE (Media queries)*/
+
 @media (min-width: 412px) and (max-width: 599px) {
     .contenedor-header{
         display: flex;
@@ -413,3 +463,4 @@ a{
         border: #448A92 solid 2px;
     }
 }
+

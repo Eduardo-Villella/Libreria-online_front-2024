@@ -8,7 +8,7 @@ usuario.addEventListener('blur', validateUsuario, { passive: true });// blur met
 function validateUsuario() {
     const usuarioValue = usuario.value.trim();
     if (usuarioValue.length < 5 || !/^[\wñÑ\s._-]+$/.test(usuarioValue) || /\s{2,}/.test(usuarioValue)) {// Regex (!/^[\wñÑ\s._-]+$/) -regular expresion- su uso es excelente para determinar filtros
-        errorUsuario.textContent = 'El nombre de usuario debe tener al menos 5 caracteres, solo puede contener: letras, números, espacio entre caracteres (no dos espacios seguidos), guión bajo, guión medio y/o punto.';
+        errorUsuario.textContent = 'El nombre de usuario debe tener al menos 5 caracteres';
         usuario.classList.add('is-invalid');
         return false;
     } else {
@@ -26,7 +26,7 @@ email.addEventListener('blur', validateEmail, { passive: true });
 function validateEmail() {
     const emailValue = email.value.trim();
     if (!/^[\wñÑ](?:[\wñÑ._-]*[\wñÑ])?@[A-Za-z0-9](?:[A-Za-z0-9.-]*[A-Za-z0-9])?\.[A-Za-z]{2,}$/.test(emailValue)) {
-        errorEmail.textContent = 'El email debe ser válido: contener "@", sin espacios en blanco solo se permiten punto, guión medio, guión bajo y no se permiten dos juntos. Controle la finalzación "puntoAlgo" debe ser válida';
+        errorEmail.textContent = 'El email debe ser válido: SI "@ . - _" y NO "espacios blancos" ';
         email.classList.add('is-invalid');
         return false;
     } else {
@@ -38,37 +38,37 @@ function validateEmail() {
 
 // Valida contraseña
 const password = document.getElementById('password');
-const errorpassword = document.getElementById('errorpassword');
+const errorPassword = document.getElementById('errorPassword');
 password.addEventListener('blur', validatepassword, { passive: true });
 
 function validatepassword() {
     const passwordValue = password.value.trim();
     if (passwordValue.length < 8) {
-        errorpassword.textContent = 'La contraseña debe tener al menos 8 caracteres.';
+        errorPassword.textContent = 'La contraseña debe tener al menos 8 caracteres.';
         password.classList.add('is-invalid');
         return false;
     } else {
-        errorpassword.textContent = '';
+        errorPassword.textContent = '';
         password.classList.remove('is-invalid');
         return true;
     }
 }
 
 // Valida confirmación de contraseña
-const confirmpassword = document.getElementById('confirmpassword');
-const errorConfirmpassword = document.getElementById('errorConfirmpassword');
-confirmpassword.addEventListener('blur', validateConfirmpassword, { passive: true });
+const confirmPassword = document.getElementById('confirmPassword');
+const errorConfirmPassword = document.getElementById('errorConfirmPassword');
+confirmPassword.addEventListener('blur', validateConfirmPassword, { passive: true });
 
-function validateConfirmpassword() {
-    const confirmpasswordValue = confirmpassword.value.trim();
+function validateConfirmPassword() {
+    const confirmPasswordValue = confirmPassword.value.trim();
     const passwordValue = password.value.trim();
-    if (confirmpasswordValue !== passwordValue || confirmpasswordValue === '') {
-        errorConfirmpassword.textContent = 'Las contraseñas no coinciden.';
-        confirmpassword.classList.add('is-invalid');
+    if (confirmPasswordValue !== passwordValue || confirmPasswordValue === '') {
+        errorConfirmPassword.textContent = 'Las contraseñas no coinciden.';
+        confirmPassword.classList.add('is-invalid');
         return false;
     } else {
-        errorConfirmpassword.textContent = '';
-        confirmpassword.classList.remove('is-invalid');
+        errorConfirmPassword.textContent = '';
+        confirmPassword.classList.remove('is-invalid');
         return true;
     }
 }
@@ -77,7 +77,7 @@ function validateConfirmpassword() {
 document.getElementById('registroForm').addEventListener('submit', function(event) {
     event.preventDefault(); // Previene el envio del formulario por defecto
 
-    if (validateUsuario() && validateEmail() && validatepassword() && validateConfirmpassword()) {
+    if (validateUsuario() && validateEmail() && validatepassword() && validateConfirmPassword()) {
         console.log('en pérfil.js: Validaciones de formulario pasadas, solicitando configuración del backend...');
 
         fetch(`http://localhost:3000/api/config`)
@@ -119,7 +119,7 @@ document.getElementById('registroForm').addEventListener('submit', function(even
                 }));
             })
             .then(data => {
-                console.log('Respuesta del backend:', data);// borrar
+                console.log('en registro.js: Respuesta del backend:', data);// borrar
                 if (data.body.success) {
                     localStorage.setItem('token', data.body.token);
                     Swal.fire({

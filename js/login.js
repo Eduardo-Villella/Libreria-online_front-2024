@@ -8,7 +8,7 @@ email.addEventListener('blur', validateEmail, { passive: true });
 function validateEmail() {
     const emailValue = email.value.trim();
     if (!/^[\wñÑ](?:[\wñÑ._-]*[\wñÑ])?@[A-Za-z0-9](?:[A-Za-z0-9.-]*[A-Za-z0-9])?\.[A-Za-z]{2,}$/.test(emailValue)) {
-        errorEmail.textContent = 'El email debe ser válido: contener "@", sin espacios en blanco solo se permiten punto, guión medio, guión bajo y no se permiten dos juntos. Controle la finalzación "puntoAlgo" debe ser válida';
+        errorEmail.textContent = 'El email debe ser válido: SI "@ . - _" y NO "espacios blancos" ';
         email.classList.add('is-invalid');
         return false;
     } else {
@@ -64,7 +64,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
                     email: document.getElementById('email').value.trim(),
                     password: document.getElementById('password').value.trim()// Debe coincidir con lo esperado por el backend, revisar DB
                 };
-                console.log('en login.js: Datos del formulario:', formData);// BORRAR
+                console.log('en login.js: Datos del formulario enviados al backend:', formData);// BORRAR
 
                 // Envio del formulario al backend
                 return fetch(`${BACKEND_URL}/api/users/login`, {
@@ -102,7 +102,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
                                 window.location.href = 'dashboard.html';
                             },
                             preDeny: () => {
-                                logout(); // Ejecuta la funcion logout de common.js
+                                logout(); // Ejecuta la funcion logout de common.js 
                                 return false;
                             }
     
