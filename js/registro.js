@@ -132,7 +132,7 @@ document.getElementById('registroForm').addEventListener('submit', function(even
                         showDenyButton: true,
                         confirmButtonText: 'Completa tu Perfil',
                         denyButtonText: 'Login',
-                        cancelButtonText: 'Ver Productos',
+                        cancelButtonText: 'Ver catalogo',
                         preConfirm: () => {
                             window.location.href = 'perfil.html';
                         },
@@ -146,7 +146,7 @@ document.getElementById('registroForm').addEventListener('submit', function(even
                                 window.location.href = 'index.html';
                                 
                         } else if (result.dismiss === Swal.DismissReason.cancel) {
-                            window.location.href = 'productos.html';
+                            window.location.href = 'catalogo.html';
                         }
 
                     });
@@ -164,7 +164,7 @@ document.getElementById('registroForm').addEventListener('submit', function(even
                             showDenyButton: true,
                             confirmButtonText: 'Ir a login',
                             denyButtonText: 'Probar otro email',
-                            cancelButtonText: 'Ir a productos',
+                            cancelButtonText: 'Ir a catalogo',
                             preConfirm: () => {
                                 window.location.href = 'login.html';
                             },
@@ -179,7 +179,7 @@ document.getElementById('registroForm').addEventListener('submit', function(even
                                     window.location.href = 'index.html';
                                     
                             } else if (result.dismiss === Swal.DismissReason.cancel) {
-                                window.location.href = 'productos.html';
+                                window.location.href = 'catalogo.html';
                             }
 
                         });

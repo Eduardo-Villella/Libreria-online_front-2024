@@ -150,11 +150,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                         allowOutsideClick: true,
                         showCancelButton: true,
                         showDenyButton: true,
-                        confirmButtonText: 'Ir a Productos',
+                        confirmButtonText: 'Ir a catalogo',
                         denyButtonText: 'Ir a Inicio',
                         cancelButtonText: 'Salir',
                         preConfirm: () => {
-                            window.location.href = 'productos.html';
+                            window.location.href = 'catalogo.html';
                         },
                         preDeny: () => {
                             window.location.href = 'index.html';
@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             // Para cerrar el cuadro de mensaje y permanecer en la misma pagina, no es necesario agregar nada aqui.
                         },
                         preDeny: () => {
-                            window.location.href = 'productos.html';
+                            window.location.href = 'catalogo.html';
                         }
                     });
                 }
@@ -212,7 +212,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 // Para cerrar el cuadro de mensaje y permanecer en la misma pagina, no es necesario agregar nada aqui.
             },
             preDeny: () => {
-                window.location.href = 'productos.html';
+                window.location.href = 'catalogo.html';
             }
         });
     }

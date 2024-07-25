@@ -9,6 +9,7 @@
 
 body{
     background-color: aliceblue;
+    padding-top: 49px; /* Ajustar este valor segun la altura del encabezado para evitar que el contenido quede oculto detras del encabezado fijo */
 }
 
 a{
@@ -26,12 +27,19 @@ a{
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    margin-top: 10px;
+    position: fixed; /* Fija el encabezado en la pantalla */
+    top: 0; /* Coloca el encabezado en la parte superior de la pagina */
+    left: 0; /* Coloca el encabezado en la parte izquierda de la pagina */
+    width: 100%; /* Asegura que el encabezado ocupe todo el ancho de la pantalla */
+    backdrop-filter: blur(10px); /* Aplica un desenfoque al contenido detras del encabezado */
+    background: rgba(225, 195, 255, 0.6); /* Fondo color semitransparente */
+    box-shadow: 0 4px 8px rgba(210, 180, 240, 1.9); /* Agrega una sombra para mejorar la visibilidad */
+    z-index: 2000; /* Asegura que el encabezado este por encima de otros elementos */
 }
 
 .contenedor-header-imagen img{
-    width: 80px;
-    border-radius: 20px;
+    width: 60px;
+    border-radius: 15px;
 }
 
 .contenedor-header-buscador form input{
@@ -45,21 +53,97 @@ a{
     border-left: 6px;
     border-right: 6px;
     font-size: 80%; /* Reduccion del tamaño de la letra al 80% del tamaño original */
+    background: rgba(225, 195, 255, 0.1);
 }
 
 .contenedor-header-autentificacion button:hover{
     color: #E35164;
 }
 
-.contenedor-header-carrito .carrito:hover{
+/* ---- Icono perfil usuario ---- */
+
+.perfil-container {
+    position: relative;
+    display: inline-block;
+    z-index: 2000;
+}
+
+.perfil-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Agrega una transición suave al color de fondo */
+}
+
+.perfil-pic:hover {
+    background-color: rgb(227, 81, 100);
+}
+
+.perfil-hover-message {
+    display: none;
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgb(23, 42, 218);
+    padding: 5px;
+    border-radius: 4px;
+    white-space: nowrap;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    z-index: 2000;
+}
+
+.perfil-container:hover .perfil-hover-message {
+    display: block;
+}
+
+/* ---- Fin icono perfil usuario ---- */
+
+.contenedor-header-carrito {
+    display: flex;
+    align-items: center; /* Alinea verticalmente el contenido */
+    margin-left: 1rem; /* Ajusta el margen si es necesario */
+}
+
+.signo-pesos {
+    margin: 0; /* Elimina el margen del parrafo */
+    margin-top: 4px;
+}
+
+.carrito {
+    font-size: 1.5rem; /* Ajusta el tamaño del ícono si es necesario */
+    vertical-align: middle; /* Alinea el ícono verticalmente con el texto */
+}
+
+.contenedor-header-carrito, .carrito:hover{
     color: #E35164;
 }
 
 /* NAV */
 
-.color-nav{
-    background-color: #448A92;
-    margin-top: 20px;
+.navbar{
+    position: fixed;
+    margin-top: 1px; /* Coloca el nav a distancia, en la parte superior de la pagina */
+    left: 0; /* Coloca el nav en la parte izquierda de la pagina */
+    width: 100%; /* Asegura que el encabezado ocupe todo el ancho de la pantalla */
+    backdrop-filter: blur(10px); /* Aplica un desenfoque al contenido detras del encabezado */
+    background: rgba(68, 138, 146, 0.6); /* Fondo color semitransparente */
+    box-shadow: 0 4px 8px rgba(53, 123, 131, 1.9); /* Agrega una sombra para mejorar la visibilidad */
+    padding: 0.2rem 0.2rem; /* Ajusta el padding para hacerlo mas fino */
+    z-index: 1000; /* Asegura que el encabezado este por encima de otros elementos */
+}
+
+.nav-link {
+    padding: 0.25rem 0.3rem; /* Ajusta el padding de los enlaces */
+    font-size: 0.9rem; /* Ajusta el tamaño del texto si es necesario */
+    font-weight: bold;
+}
+
+.collapse, .navbar-collapse, .dropdown-menu, .nav-item, .nav-link {
+    line-height: 1.2; /* Ajusta el line-height para que el contenido sea más fino */
 }
 
 .dropdown-menu a:hover{
@@ -67,7 +151,8 @@ a{
 }
 
 .nav-item:hover{
-    font-weight: bold;
+    font-weight: bold; /* Aplica negrita */
+    text-decoration: underline; /* Aplica subrayado */
 }
 
 .nav-link:hover, .active:hover{
@@ -76,7 +161,16 @@ a{
 
 /* MAIN */
 
-.contenedor-carrusel,.carrusel-item{
+.carousel { /* Modifica class bootstrap */
+    padding-top: 42px;
+}
+
+.carousel-control-next-icon, .carousel-control-prev-icon {
+    color: blue !important;
+    font-weight: bold !important;
+}
+
+.contenedor-carrusel, .carrusel-item{
     height: 700px;
 }
 
@@ -91,6 +185,7 @@ a{
 
 .contenedor-main-imagen img{
     width: 80px;
+    padding-top: 42px;
 }
 
 .contenedor-preguntas-frecuentes{
@@ -198,8 +293,8 @@ input[type="date" i] {
     border: none;
     cursor: pointer;
     color: rgb(161, 158, 158);
-    z-index: 1; /* Asegúrate de que el ícono esté por encima del campo */
     padding-right: 0.018rem; /* Espacio para el ícono */
+    z-index: 1; /* Asegúrate de que el ícono esté por encima del campo */
 }
 
 #passwordIcon, #confirmPasswordIcon {
@@ -246,8 +341,8 @@ input[type="date" i] {
     width: 70px;
 }
 
-/* CATÁLOGO */
-.catalogo-grid div{
+/* Paginas Amigas */
+.paginasAmigas-grid div{
     display: flex; /*Agregado para usar justify-content: center y align-items: center;*/
     border: 2px black solid;
     height: 200px;
@@ -255,29 +350,29 @@ input[type="date" i] {
     justify-content: center;
     align-items: center;
     flex-grow: 1; /*Agregado para que las palabras se ajusten al contenedor ATENCION no parece responsive aun*/
-
 }
 
-.catalogo-grid{
+.paginasAmigas-grid{
     gap: 10px;
-
 }
 
-.catalogo-grid a{
+.paginasAmigas-grid a{
     font-size: 48px;
     font-weight: bold;
     color: white;
     text-shadow: 5px 3px blue, 0px 0px white;
-
 }
 
-.catalogo-grid a:hover{
+.paginasAmigas-grid a:hover{
     font-size: 64px; /* Agrandamos la letra un 20% */
     color: green; /* Cambiamos el color a verde */
-
 }
 
-/* Cards Productos */
+/* Cards catalogo */
+
+#container-catalogo {
+    padding-top: 42px;
+}
 
 .product-wap { 
     box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.10);
@@ -292,19 +387,26 @@ input[type="date" i] {
 }
 
 .card.product-wap .card .product-overlay {
-  background: rgba(0,0,0,.2);
-  visibility: hidden;
-  opacity: 0;
-  transition: .3s;
-}
-.card.product-wap:hover .card .product-overlay {
-  visibility: visible;
-  opacity: 1;
+    background: rgba(0,0,0,.2);
+    visibility: hidden;
+    opacity: 0;
+    transition: .3s;
 }
 
-.card.product-wap a { color: #000;}
-    #carousel-related-product .slick-slide:focus { outline: none !important;}
-    #carousel-related-product .slick-dots li button:before {
+.card.product-wap:hover .card .product-overlay {
+    visibility: visible;
+    opacity: 1;
+}
+
+.card.product-wap a { 
+    color: #000;
+}
+
+#carousel-related-product .slick-slide:focus { 
+    outline: none !important;
+}
+
+#carousel-related-product .slick-dots li button:before {
     font-size: 15px;
     margin-top: 20px;
 }

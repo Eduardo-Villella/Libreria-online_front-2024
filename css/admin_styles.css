@@ -1,0 +1,247 @@
+body {
+    display: flex;
+    height: 100vh;
+    background-color: aliceblue;
+}
+
+li a{
+    color: grey !important;
+}
+
+li .active:hover{
+    color: #E35164 !important;
+}
+
+#sidebar {
+    width: 250px;
+    transition: all 0.3s;
+    background-color: #4A3E64 !important;
+}
+
+#sidebar.collapsed {
+    width: 0;
+}
+
+#sidebar.sidebar-hidden {
+    display: none; /* Oculta la barra lateral completamente */
+}
+
+#content {
+    flex-grow: 1;
+    padding: 3px;
+    overflow: auto;
+}
+
+#toggle-btn {
+    margin-right: auto;
+}
+
+/* ---- Icono perfil usuario ---- */
+
+.perfil-container {
+    display: inline-block;
+    align-items: center;
+    position: relative;
+    z-index: 2000;
+}
+
+.perfil-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Agrega una transición suave al color de fondo */
+    margin-left: 15px; /* Espacio entre el ícono y el texto */
+}
+
+.perfil-pic:hover {
+    background-color: rgb(227, 81, 100);
+}
+
+.perfil-hover-message {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-40%); /* Centra el mensaje horizontalmente */
+    background-color: rgb(23, 42, 218);
+    padding: 5px;
+    margin-top: 3px; /* Espacio entre el icono y el mensaje */
+    border-radius: 4px;
+    white-space: nowrap;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    z-index: 2000;
+}
+
+.perfil-container:hover .perfil-hover-message {
+    display: block;
+}
+/* ---- Fin icono perfil usuario ---- */
+
+.navbar {
+    display: flex;
+    justify-content: space-between; /* Cambia a space-between para colocar los elementos a los extremos */
+    align-items: center;
+    background-color: #4A3E64;
+    padding: 2px 10px;
+}
+
+HEAD
+.navbar-expand-lg{
+    background-color: #4A3E64 !important;
+    margin: 0;
+    padding: 10px;
+}
+
+.nav-item:hover{
+    background-color: #0D6EFD;
+    border-radius: 10px;
+}
+
+.navbar-brand {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 3px; /* Ajusta el margen superior para elevar el logo */
+    margin-bottom: 3px; /* Ajusta el margen inferior para reducir el espacio */
+}
+
+#image-preview{
+    display: none;
+}
+
+.btn-danger{
+    background-color: #E35164 !important;
+    border-color: #E35164 !important;
+}
+
+.btn-primary{/* Botones cards */
+    background-color: #4A3E64;
+    border-color: #4A3E64;
+}
+
+.btn-success, .btn-secondary{/*Boton menu */
+    background-color: #4A3E64 !important;
+    border-color: #4A3E64 !important;
+}
+
+.btn-close:hover{
+    background-color: #E35164 !important;
+}
+
+.modal-body{
+    background-color: aliceblue;
+}
+
+.detalles, .agregar{
+    color: #4A3E64;
+}
+
+.detalles{
+    height: auto;
+}
+
+.detalles .col-md-8{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.detalles .col-md-4{
+    text-align: center;
+}
+
+.detalles .col-md-4 img{
+    border: 2px solid #448A92;
+}
+
+.agregar form{
+    width: 100%;
+}
+
+/*  Cards de Administracion Inicio */
+/* Estilo base para las tarjetas */
+
+.card {
+    height: 100%; /* Ajustar a la altura maxima del contenedor */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    opacity: 99%; /* Opacidad base de las tarjetas */
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.card:hover {/* Efecto de opacidad y aumento en hover */
+    opacity: 1; /* Elimina la opacidad en hover */
+    transform: scale(1.1); /* Aumenta ligeramente el tamaño de la tarjeta */
+    box-shadow: 0 0 10px rgba(63, 61, 233, 0.836); /* Contorno difuminado naranja */
+}
+
+/* Asegurar que todas las imagenes tengan el mismo tamaño y esten centradas */
+
+.card-img-top {
+    object-fit: cover; /* Ajusta la imagen para que cubra el contenedor */
+    width: 100%; /* Asegura que la imagen ocupa todo el ancho del contenedor */
+    height: 200px; /* Altura fija para todas las imagenes */
+    display: block; /* Elimina espacios adicionales debajo de la imagen */
+}
+
+/* Titulos centrados y ajustables */
+
+.card-title {
+    text-align: center;
+    font-size: 2rem; /* Ajusta el tamaño del título */
+    color: black; /* Ajusta el color del título */
+    margin: 0.5rem 0; /* Espaciado alrededor del título */
+    transition: color 0.3s ease, font-weight 0.3s ease; /* Transición suave para color y peso */
+}
+
+.card:hover .card-title {
+    color: blue; /* Cambia el color del título en hover */
+    font-weight: bold; /* Cambia el peso del título en hover */
+}
+
+/* Texto explicativo alineado a la izquierda y ajustable */
+
+.card-text {
+    text-align: left;
+    font-size: 1rem; /* Ajusta el tamaño del texto */
+    color: #000000; /* Ajusta el color del texto */
+}
+
+.card-body {
+    text-align: right;
+    background-color: #f3e5fa; /* Fondo base para la parte de abajo de la tarjeta */
+    padding: 1rem; /* Espaciado alrededor del contenido */
+}
+
+.card:hover .card-body {
+    background-color: #dcfddc; /* Fondo verde muy claro en hover */
+}
+
+.card-body .btn-primary {
+    /*background-color: #007bff; /* Ajusta el color del botón */
+    /*border-color: #007bff; /* Ajusta el color del borde del botón */
+    color: #fff; /* Ajusta el color del texto del botón */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transición suave para el botón */
+}
+
+.card:hover .card-body .btn-primary {
+    background-color: #0056b3 !important; /* Color del fondo del botón en hover */
+    border-color: #004085 !important; /* Color del borde del botón en hover */
+    color: #fff !important; /* Color del texto del botón en hover */
+    font-weight: bold; /* Negritas para el texto del botón en hover */
+}
+
+/* Imagen de card Cerrar Salir */
+
+.card:hover #admin_out_image {
+    filter: brightness(30%); /* Apaga las luces de la imagen */
+}
+
+#admin_out_image {
+    transition: filter 0.3s ease; /* Transición suave del filtro */
+}
+

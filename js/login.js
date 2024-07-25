@@ -97,9 +97,9 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
                             showDenyButton: true,
                             confirmButtonText: 'Ir a Administracion',
                             denyButtonText: 'Salir',
-                            cancelButtonText: 'Ver Productos',
+                            cancelButtonText: 'Ver catalogo',
                             preConfirm: () => {
-                                window.location.href = 'dashboard.html';
+                                window.location.href = 'admin_dashboard.html';
                             },
                             preDeny: () => {
                                 logout(); // Ejecuta la funcion logout de common.js 
@@ -113,7 +113,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
                                 return false;
                                     
                             } else if (result.dismiss === Swal.DismissReason.cancel) {
-                                window.location.href = 'productos.html';
+                                window.location.href = 'catalogo.html';
                             }
     
                         });
@@ -129,7 +129,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
                             showDenyButton: true,
                             confirmButtonText: 'Ir a Mi Perfil',
                             denyButtonText: 'Salir',
-                            cancelButtonText: 'Ver Productos',
+                            cancelButtonText: 'Ver catalogo',
                             preConfirm: () => {
                                 window.location.href = 'perfil.html';
                             },
@@ -143,7 +143,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
                                 window.location.href = 'index.html';
                                 
                             } else if (result.dismiss === Swal.DismissReason.cancel) {
-                                window.location.href = 'productos.html';
+                                window.location.href = 'catalogo.html';
                             }
 
                         });
@@ -176,7 +176,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
                             window.location.href = 'index.html';
                                     
                         } else if (result.dismiss === Swal.DismissReason.cancel) {
-                            window.location.href = 'productos.html';
+                            window.location.href = 'catalogo.html';
                         }
 
                     });
@@ -207,7 +207,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
                             window.location.href = 'index.html';
                                         
                         } else if (result.dismiss === Swal.DismissReason.cancel) {
-                            window.location.href = 'productos.html';
+                            window.location.href = 'catalogo.html';
                         }
     
                     });

@@ -1,13 +1,25 @@
 /* Archivo de funciones y script comunes a todos los html */
+// logout
+// icono ojo contraseña
+// icono perfil usuario
+// sidebar administracion
 
 // Funcion para logout: elimina token del localStorage y redirige
 function logout() {
-    localStorage.removeItem('token'); // Elimina token del localStorage
-    window.location.href = 'index.html'; // Redirige a la pagina de inicio
+    localStorage.removeItem('token');
+    window.location.href = 'index.html';
 }
-document.getElementById('logoutButton').addEventListener('click', logout);
+document.addEventListener('DOMContentLoaded', function() {
+    let logoutLink = document.getElementById('logoutButton');
+    if (logoutLink) {
+        logoutLink.addEventListener('click', function(event) {
+            event.preventDefault(); // Evita que el enlace redirija antes
+            logout();
+        });
+    }
+});
 
-/* ---------------------------------------------------------------------- */
+/* ------------------------------------------------------------------------------------------- */
 
 // Funcion para alternar mostrar u ocultar contraseña y confirmacion de contraseña
 document.addEventListener('DOMContentLoaded', () => {
@@ -51,5 +63,40 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-/* ---------------------------------------------------------------------- */
+/* ------------------------------------------------------------------------------------------- */
+
+// Funcion para manejar icono perfil usuario
+document.addEventListener('DOMContentLoaded', () => {
+    const perfilPic = document.getElementById('perfilPic');
+    const perfilHoverMessage = document.getElementById('perfilHoverMessage');
+    
+    const isLoggedIn = localStorage.getItem('token');// Verifica si el usuario esta logueado
+    
+    if (isLoggedIn) {
+        perfilPic.src = '../image/user_icons8-usuario-de-género-neutro.gif'; // Cambia por la foto del perfil del usuario (a futuro, por ahora cambia a gif)
+        perfilHoverMessage.textContent = 'Perfil';
+        perfilPic.addEventListener('click', () => {
+            window.location.href = 'perfil.html';
+        });
+    } else {
+        perfilPic.src = '../image/user_account_circle_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.png';// Imagen por defecto
+        perfilHoverMessage.textContent = 'Ingresar';
+        perfilPic.addEventListener('click', () => {
+            window.location.href = 'login.html';
+        });
+    }
+
+});
+
+/* ------------------------------------------------------------------------------------------- */
+
+// Funcion para manejar sidebar boton de alternancia en Administracion
+const toggleBtn = document.getElementById('toggle-btn');
+const sidebar = document.getElementById('sidebar');
+
+toggleBtn.addEventListener('click', function() {
+    sidebar.classList.toggle('sidebar-hidden');
+});
+
+/* ------------------------------------------------------------------------------------------- */
 

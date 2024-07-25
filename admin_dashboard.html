@@ -1,0 +1,177 @@
+<!DOCTYPE html><!-- Define el tipo de documento como HTML5 -->
+<html lang="es"><!-- Lenguaje en pantalla y navegadores -->
+
+<head>
+    <meta charset="UTF-8"><!-- Codificacion y reconocimiento de caracteres -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- Adaptabilidad para dispositivos moviles -->
+    <link rel="shortcut icon" href="image/logo-pagina.png" type="image/x-icon"><!-- Icono para la pestaña del navegador -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"><!-- Referencia a recursos externos, aqui carga recursos de bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"><!-- Referencia a recursos externos, aqui carga iconos de bootstrap -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><!-- Referencia a recursos externos, aqui carga recursos de font-awesome -->
+    <!--<link rel="stylesheet" href="./css/estilos.css"> Referencia a recursos internos, aqui carga diseños del archivo css estilos -->
+    <link rel="stylesheet" href="./css/admin_styles.css">
+    <title>C E I J Libros - Administración</title><!-- Titulo que aparece en la pestaña del navegador -->
+    <!-- Otras etiquetas comunes en el head -->
+    <meta name="author" content="C E I J"><!-- Especifica el autor del documento -->
+    <meta name="description" content="venta de libros"><!-- Proporciona una descripcion del contenido de la pagina, util para SEO -->
+    <meta name="keywords" content="libro, libros, comprar, compra, ventas, venta"><!-- Define palabras clave relacionadas con el contenido de la pagina para SEO -->
+    <meta name="robots" content="index, follow"><!-- Indica a los motores de busqueda como deben indexar, es decir, incluir la pagina en sus resultados de busqueda; y follow: Indica que deben seguir los enlaces en la pagina -->
+    <link rel="canonical" href="http://localhost:8080/index.js"><!-- Define la URL canonica: la versión principal de la pagina que debe indexar-->
+</head>
+
+<body>
+    <!-- HEADER -->
+    <!-- Sidebar -->
+    <nav id="sidebar" class="bg-dark text-white">
+        <div class="p-4">
+            <h4>Menu</h4>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="admin_books.html">Libros</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="admin_users.html">Usuarios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="Facturación.html">Facturación</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#">Pedidos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#">Envios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="catalogo.html">Ir a Catálogo</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#">Otros</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="admin_dashboard.html">Inicio Administración</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div id="content">
+        <!-- Topbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <button id="toggle-btn" class="btn btn-secondary" type="button">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <a class="navbar-brand" href="#">Administración<img src="image/logo-pagina.png" alt="" width="40px" height="40px"> C E I J Libros</a>
+
+            <div class="perfil-container" id="perfilContainer">
+                <img src="image/user_account_circle_24dp_5F6368_FILL0_wght400_GRAD0_opsz48.png" id="perfilPic" alt="Perfil" class="perfil-pic">
+                <span class="perfil-hover-message" id="perfilHoverMessage">Perfil</span>
+            </div>
+        </nav>
+
+        <!-- MAIN -->
+        <div class="container mt-5">
+            <div class="row">
+                <!-- Tarjeta de Libros -->
+                <div class="col-md-3 mb-4">
+                    <div class="card">
+                        <img src="image/admin_books.jpg" class="card-img-top" alt="Libros">
+                        <div class="card-body">
+                            <h5 class="card-title">Libros</h5>
+                            <p class="card-text">Gestión de libros disponibles.</p>
+                            <a href="admin_books.html" class="btn btn-primary">Entrar</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tarjeta de Usuarios -->
+                <div class="col-md-3 mb-4">
+                    <div class="card">
+                        <img src="image/admin_users.jpg" class="card-img-top" alt="Usuarios">
+                        <div class="card-body">
+                            <h5 class="card-title">Usuarios</h5>
+                            <p class="card-text">Administrar usuarios del sistema.</p>
+                            <a href="admin_users.html" class="btn btn-primary">Entrar</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tarjeta de Facturación -->
+                <div class="col-md-3 mb-4">
+                    <div class="card">
+                        <img src="image/admin_tickets.jpg" class="card-img-top" alt="Facturación">
+                        <div class="card-body">
+                            <h5 class="card-title">Facturación</h5>
+                            <p class="card-text">Gestionar las facturas y pagos.</p>
+                            <a href="facturacion.html" class="btn btn-primary">Entrar</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tarjeta de Pedidos -->
+                <div class="col-md-3 mb-4">
+                    <div class="card">
+                        <img src="image/admin_orders.jpg" class="card-img-top" alt="Pedidos">
+                        <div class="card-body">
+                            <h5 class="card-title">Pedidos</h5>
+                            <p class="card-text">Visualizar y gestionar pedidos.</p>
+                            <a href="#" class="btn btn-primary">Entrar</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tarjeta de Envíos -->
+                <div class="col-md-3 mb-4">
+                    <div class="card">
+                        <img src="image/envios.jpg" class="card-img-top" alt="Envíos">
+                        <div class="card-body">
+                            <h5 class="card-title">Envíos</h5>
+                            <p class="card-text">Visualizar y gestionar los envíos.</p>
+                            <a href="#" class="btn btn-primary">Entrar</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tarjeta de Otros -->
+                <div class="col-md-3 mb-4">
+                    <div class="card">
+                        <img src="image/admin_otros.jpg" class="card-img-top" alt="Otros">
+                        <div class="card-body">
+                            <h5 class="card-title">Otros</h5>
+                            <p class="card-text">Otros elementos administrativos.</p>
+                            <a href="#" class="btn btn-primary">Entrar</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tarjeta de Ir a catálogo -->
+                <div class="col-md-3 mb-4">
+                    <div class="card">
+                        <img src="image/catalogo.jpg" class="card-img-top" alt="Ir a catálogo">
+                        <div class="card-body">
+                            <h5 class="card-title">Ir a Catálogo</h5>
+                            <p class="card-text">Acceder a la sección de Catálogo.</p>
+                            <a href="catalogo.html" class="btn btn-primary">Ir a Catálogo</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tarjeta de Cerrar -->
+                <div class="col-md-3 mb-4">
+                    <div class="card">
+                        <img src="image/admin_out.jpg" class="card-img-top" id="admin_out_image" alt="Cerrar">
+                        <div class="card-body">
+                            <h5 class="card-title">Cerrar sesión</h5>
+                            <p class="card-text">Cerrar sesión o salir.</p>
+                            <a href="index.html" class="btn btn-primary" id="logoutButton">Cerrar sesión</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Script -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/sweetalert2.all.min.js"></script>
+    <script src="js/common.js"></script>
+
+</body>
+
+</html>
+
