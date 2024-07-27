@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const config = await configResponse.json();
         const BACKEND_URL = config.backendUrl;
-        console.log(' perfil.js 1.s : ruta  BACKEND_URL:', BACKEND_URL);// borrar
+        console.log(' perfil.js 1.s : ruta  BACKEND_URL:', BACKEND_URL);// borrar 
         const perfilResponse = await fetch(`${BACKEND_URL}/api/users/perfil`, { 
             headers: {
                 'Authorization': `Bearer ${token}`,

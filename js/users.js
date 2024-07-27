@@ -1,8 +1,113 @@
-const baseUrl = 'http://localhost:3000/api';//remplazar http://34.46.27.106:3000 por http://localhost:3000
-const usersEndpoint = `${baseUrl}/users`;
+const baseUrl = 'http://localhost:3000/api';
+const usersEndpoint = `${baseUrl}/users/admin`; // Este endpoint es para verificar el rol
 
+document.addEventListener('DOMContentLoaded', async function () {
+    try {
+        const token = localStorage.getItem('token'); // Obtengo el token almacenado en localStorage
+        
+        if (!token) { // Verifico si el token existe
+            alert('en front users.js: No estás autenticado. Por favor, inicia sesión.');
+            window.location.href = 'login.html'; // Redirijo al login si no hay token
+            return;
+        }
+        
+        const headers = new Headers(); // Configuro los headers para la solicitud con el token
+        headers.append('Authorization', `Bearer ${token}`);
+            
+            const usersResponse = await fetch(usersEndpoint, { 
+                method: 'GET',
+                headers: headers
+            });
+
+            console.log('en front users.js: Respuesta al obtener usuarios:', usersResponse); // borrar Log de la respuesta de usuarios
+        
+            if (!usersResponse.ok) {
+                const errorMessage = await usersResponse.text(); // Obtiene el mensaje de error
+                console.error('en front users.js: Error al obtener los usuarios:', errorMessage);//borrar
+                alert('No tienes autorización para acceder a esta página.');
+                window.location.href = 'login.html'; // Redirijo al login si no tiene permiso
+                return;
+            }
+        
+            const data = await usersResponse.json();
+            console.log('en front users.js: Datos de los usuarios:', data); //borrar Log de los datos de los usuarios
+
+            const usersTableBody = document.getElementById('usersTableBody'); // Obtengo el cuerpo de la tabla
+            usersTableBody.innerHTML = ''; // Limpia cualquier contenido previo
+        
+            data.result.forEach(user => { // Itera sobre los usuarios y crea las filas de la tabla
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${user.id_usuarios}</td>
+                    <td>${user.usuario}</td>
+                    <td>${user.email}</td>
+                    <td>${user.password}</td>
+                    <td>${user.nombre}</td>
+                    <td>${user.apellido}</td>
+                    <td>${user.fecha_nacimiento}</td>
+                    <td>${user.telefono}</td>
+                    <td>${user.direccion}</td>
+                    <td>${user.ciudad}</td>
+                    <td>${user.provincia}</td>
+                    <td>${user.pais}</td>
+                    <td>${user.codigo_postal}</td>
+                    <td>${user.rol}</td>
+                    <td>${user.status}</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editUserModal">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-danger btn-sm">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </td>
+                `;
+                usersTableBody.appendChild(row);
+            });
+        
+    } catch (error) {
+        console.error('en front users.js: Error al verificar el token:', error);
+        alert('en front users.js: Se ha producido un error. Por favor, intenta de nuevo.');
+        window.location.href = 'login.html'; // Redirijo al login en caso de error
+    }
+
+});
+
+
+/* ejemplo pára validar y requerir datos */
+/*
+<form id="registrationForm">
+  <input type="text" name="usuario" id="usuario" required>
+  <input type="email" name="email" id="email" required>
+  <input type="password" name="password" id="password" required>
+  <input type="text" name="nombre" id="nombre">
+  <input type="text" name="apellido" id="apellido">
+  <input type="date" name="fecha_nacimiento" id="fecha_nacimiento">
+  <input type="text" name="telefono" id="telefono">
+  <input type="text" name="direccion" id="direccion">
+  <input type="text" name="ciudad" id="ciudad">
+  <input type="text" name="provincia" id="provincia">
+  <input type="text" name="pais" id="pais">
+  <input type="text" name="codigo_postal" id="codigo_postal">
+  <button type="submit">Register</button>
+</form>
+
+<script>
+document.getElementById('registrationForm').addEventListener('submit', function(event) {
+  // Realizar validaciones adicionales aquí
+  const usuario = document.getElementById('usuario').value;
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  
+  if (!usuario || !email || !password) {
+    alert('Usuario, email y password son obligatorios.');
+    event.preventDefault(); // Prevenir el envío del formulario
+  }
+});
+</script>
+*/
 // Fetch all users
-async function fetchUsers() {
+/*async function fetchUsers() {
     try {
         const response = await fetch(usersEndpoint);
         const data = await response.json();
@@ -45,9 +150,9 @@ async function fetchUsers() {
     }
     
 }
-
+*/
 // View User
-async function viewUser(id) {
+/*async function viewUser(id) {
     const response = await fetch(`${usersEndpoint}/${id}`);
     const user = await response.json();
     user.result.forEach(user => {
@@ -68,7 +173,7 @@ async function viewUser(id) {
         document.getElementById('viewUserStatus').innerText = `${user.status}`;
     });
 
-}
+}*/
 
 // Add a new user
 /* document.getElementById('addUserForm').addEventListener('submit', async (e) =>{
@@ -102,7 +207,7 @@ async function viewUser(id) {
 }) */
 
 // Delete User
-async function deleteUser(id) {
+/*async function deleteUser(id) {
     Swal.fire({
         title: `¿Esta seguro que desea eliminar el usuario con id: ${id}?`,
         text: "este cambio no sera reversible!",
@@ -143,4 +248,4 @@ fetchUsers(); // Trae los usuarios
 // Toggle btn
 document.getElementById('toggle-btn').addEventListener('click', function () {
     document.getElementById('sidebar').classList.toggle('collapsed');
-});
+});*/

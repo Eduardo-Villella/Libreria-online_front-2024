@@ -198,7 +198,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
                         },
                         preDeny: () => {
                             password.classList.add('is-invalid');
-                            errorPassword.textContent = 'Controle su contraseña. Por favor, inténtelo de nuevo.';
+                            errorPassword.textContent = 'Verifique su contraseña. Por favor, inténtelo de nuevo.';
                         }
     
                     }).then((result) => {
