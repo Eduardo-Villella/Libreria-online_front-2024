@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"><!-- Referencia a recursos externos, aqui carga recursos de bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"><!-- Referencia a recursos externos, aqui carga iconos de bootstrap -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><!-- Referencia a recursos externos, aqui carga recursos de font-awesome -->
-    <link rel="stylesheet" href="./css/admin_styles.css">
+    <link rel="stylesheet" href="./css/admin_styles.css"><!-- Referencia a recursos internos, aqui carga diseños del archivo css admin_styles -->
     <title>C E I J Libros Administración Usuarios</title><!-- Titulo que aparece en la pestaña del navegador -->
     <!-- Otras etiquetas comunes en el head -->
     <meta name="author" content="C E I J"><!-- Especifica el autor del documento -->
@@ -71,18 +71,29 @@
 
         <!-- Main Content -->
         <div class="container mt-4">
-            <div class="row mb-3">
+
+            <div class="row mb-3 align-items-center">
                 <div class="col">
-                    <input type="text" class="form-control" placeholder="Buscar usuarios...">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Buscar usuarios..." aria-label="Buscar usuarios">
+                        <button class="btn btn-search btn-sm" type="button">
+                            <i class="fas fa-search"></i> Buscar
+                        </button>
+                    </div>
                 </div>
+                
                 <div class="col-auto">
-                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addUserModal">Agregar Usuario</button>
+                    <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                        <i class="fas fa-plus"></i> Nuevo Usuario
+                    </button>
                 </div>
             </div>
 
             <table class="table table-striped">
                 <thead>
                     <tr>
+                        <th>Imagen</th>
+                        <th>Link</th>
                         <th>ID</th>
                         <th>Usuario</th>
                         <th>Email</th>
@@ -102,24 +113,26 @@
                     </tr>
                 </thead>
                 <tbody id="usersTableBody">
-                    <!-- Filas de libros generadas dinámicamente -->
+                    <!-- Filas de usuarios generadas dinamicamente -->
                 </tbody>
             </table>
         </div>
     </div>
 
-    <!-- View Users -->
-    <div class="modal fade detalles" id="viewUserModal" tabindex="-1" aria-labelledby="viewUserModalLabel" aria-hidden="true">
+    <!-- View User Modal-->
+    <div class="modal fade detalles" id="viewUserModal" tabindex="-1" aria-labelledby="viewUserModalLabel"><!-- aria-hidden="true" -->
         <div class="modal-dialog modal-fullscreen">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="viewUserModalLabel">Detalles del Libro</h5>
+                    <h5 class="modal-title" id="viewUserModalLabel">Detalles del Usuario</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-8">
+                                <h5><strong>.</strong> <span id="viewUserImage"></span></h5>
+                                <h5><strong>Link: </strong> <span id="viewUserLink"></span></h5>
                                 <h5><strong>ID: </strong><span id="viewUserID"></span></h5>
                                 <h5><strong>Usuario: </strong><span id="viewUserUser"></span></h5>
                                 <h5><strong>Email: </strong><span id="viewUserEmail"></span></h5>
@@ -143,11 +156,187 @@
         </div>
     </div>
 
+    <!-- Edit User Modal -->
+    <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel"><!-- aria-hidden="true"-->
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editUserModalLabel">Editar Usuario</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editUserForm" enctype="multipart/form-data">
+
+                        <div class="mb-3">
+                            <label for="editUserImage" class="form-label">Imagen de Perfil</label>
+                            <img id="currentUserImage" src="" alt="Imagen actual" class="img-fluid mt-2" style="max-width: 150px; max-height: 150px;">
+                            <small class="form-text text-muted">Imagen de 500 KB máx. y dimensiones de 1024x1024 máx.</small>
+                            <input type="file"  class="form-control" id="editUserFile" accept="image/*">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editUserLink" class="form-label">Link</label>
+                            <input type="text" class="form-control" id="editUserLink" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editUserID" class="form-label">ID</label>
+                            <input type="text" class="form-control" id="editUserID" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editUserUser" class="form-label">Usuario</label>
+                            <input type="text" class="form-control" id="editUserUser">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editUserEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="editUserEmail" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editUserPass" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="editUserPass" readonly> 
+                        </div>
+                        <div class="mb-3">
+                            <label for="editUserNombre" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="editUserNombre">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editUserApellido" class="form-label">Apellido</label>
+                            <input type="text" class="form-control" id="editUserApellido">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editUserFechaNacimiento" class="form-label">Fecha de Nacimiento</label>
+                            <input type="date" class="form-control" id="editUserFechaNacimiento">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editUserTelefono" class="form-label">Teléfono</label>
+                            <input type="text" class="form-control" id="editUserTelefono">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editUserDireccion" class="form-label">Dirección</label>
+                            <input type="text" class="form-control" id="editUserDireccion">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editUserCiudad" class="form-label">Ciudad</label>
+                            <input type="text" class="form-control" id="editUserCiudad">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editUserProvincia" class="form-label">Provincia</label>
+                            <input type="text" class="form-control" id="editUserProvincia">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editUserPais" class="form-label">País</label>
+                            <input type="text" class="form-control" id="editUserPais">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editUserCodigoPostal" class="form-label">Código Postal</label>
+                            <input type="text" class="form-control" id="editUserCodigoPostal">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editUserRol" class="form-label">Rol</label>
+                            <input type="text" class="form-control" id="editUserRol">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editUserStatus" class="form-label">Estado</label>
+                            <input type="text" class="form-control" id="editUserStatus">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add User Modal -->
+    <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel"><!-- enctype="multipart/form-data aria-hidden="true"-->
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addUserModalLabel">Agregar Usuario</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addUserForm" enctype="multipart/form-data">
+
+                        <div class="mb-3">
+                            <label for="addUserImage" class="form-label">Imagen de Perfil</label>
+                            <input type="file" class="form-control" id="addUserImage" name="imagen_link" accept="image/*">
+                            <small class="form-text text-muted">Imagen de 500 KB máx. y dimensiones de 1024x1024 máx.</small>
+                        </div>
+                        <div class="mb-3">
+                            <label for="addUserID" class="form-label">ID</label>
+                            <input type="text" class="form-control" id="addUserID" name="id_usuarios" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="addUserUser" class="form-label">Usuario</label>
+                            <input type="text" class="form-control" id="addUserUser" name="usuario" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="addUserEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="addUserEmail" name="email" required autocomplete="email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="addUserPass" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="addUserPass" name="password" required autocomplete="new-password">
+                        </div>
+                        <div class="mb-3">
+                            <label for="addUserNombre" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="addUserNombre" name="nombre">
+                        </div>
+                        <div class="mb-3">
+                            <label for="addUserApellido" class="form-label">Apellido</label>
+                            <input type="text" class="form-control" id="addUserApellido" name="apellido">
+                        </div>
+                        <div class="mb-3">
+                            <label for="addUserFechaNacimiento" class="form-label">Fecha de Nacimiento</label>
+                            <input type="date" class="form-control" id="addUserFechaNacimiento" name="fecha_nacimiento">
+                        </div>
+                        <div class="mb-3">
+                            <label for="addUserTelefono" class="form-label">Teléfono</label>
+                            <input type="text" class="form-control" id="addUserTelefono" name="telefono">
+                        </div>
+                        <div class="mb-3">
+                            <label for="addUserDireccion" class="form-label">Dirección</label>
+                            <input type="text" class="form-control" id="addUserDireccion" name="direccion">
+                        </div>
+                        <div class="mb-3">
+                            <label for="addUserCiudad" class="form-label">Ciudad</label>
+                            <input type="text" class="form-control" id="addUserCiudad" name="ciudad">
+                        </div>
+                        <div class="mb-3">
+                            <label for="addUserProvincia" class="form-label">Provincia</label>
+                            <input type="text" class="form-control" id="addUserProvincia" name="provincia">
+                        </div>
+                        <div class="mb-3">
+                            <label for="addUserPais" class="form-label">País</label>
+                            <input type="text" class="form-control" id="addUserPais" name="pais">
+                        </div>
+                        <div class="mb-3">
+                            <label for="addUserCodigoPostal" class="form-label">Código Postal</label>
+                            <input type="text" class="form-control" id="addUserCodigoPostal" name="codigo_postal">
+                        </div>
+                        <div class="mb-3">
+                            <label for="addUserRol" class="form-label">Rol</label>
+                            <input type="text" class="form-control" id="addUserRol" name="rol">
+                        </div>
+                        <div class="mb-3">
+                            <label for="addUserStatus" class="form-label">Estado</label>
+                            <input type="text" class="form-control" id="addUserStatus" name="status">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Guardar Usuario</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    
     <!-- Script -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/sweetalert2.all.min.js"></script>
-    <script src="js/users.js"></script>
     <script src="js/common.js"></script>
+    <script src="js/users.js"></script>
+    <script src="js/password.js"></script>
     <!-- <script src="./js/api_requests.js"></script> -->
 
 </body>

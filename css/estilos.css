@@ -88,8 +88,9 @@ a{
     transform: translateX(-50%);
     background-color: rgb(23, 42, 218);
     padding: 5px;
-    border-radius: 4px;
-    white-space: nowrap;
+    border-radius: 8px;
+    white-space: normal; /* Permite saltos de línea */
+    text-align: center;
     font-size: 12px;
     font-weight: bold;
     color: white;
@@ -98,6 +99,32 @@ a{
 
 .perfil-container:hover .perfil-hover-message {
     display: block;
+}
+
+.dropdown-container {
+    position: relative;
+    text-align: center; /* Alinea al centro */
+}
+
+.dropdown-menu {
+    background-color: rgb(220, 204, 240);
+    border: 1px solid #300747;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    position: absolute;
+    z-index: 4000; /* Asegúrate de que esté por encima de otros elementos */
+}
+
+.dropdown-item {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background-color: #4c6fe0; /* Efecto hover */
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
 }
 
 /* ---- Fin icono perfil usuario ---- */
@@ -299,6 +326,16 @@ input[type="date" i] {
 
 #passwordIcon, #confirmPasswordIcon {
     font-size: 1.2rem; /* Ajusta el tamaño del ícono si es necesario */
+}
+
+#forgotPassword {
+    margin-top: 2px; /* Reducir margen superior */
+    padding: 5px 10px; /* Reducir padding */
+    text-transform: none !important; /* Mantiene el texto en su formato original */
+    font-size: 14px; /* Ajusta el tamaño de la fuente */
+    font-weight: bold; /* Ajusta el peso de la fuente si es necesario */
+    background-color: #ffcc00; /* Cambia el color de fondo del botón */
+    color: #000; /* Cambia el color del texto */
 }
 
 /* FOOTER */

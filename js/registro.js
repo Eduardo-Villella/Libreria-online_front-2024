@@ -137,6 +137,7 @@ document.getElementById('registroForm').addEventListener('submit', function(even
                             window.location.href = 'perfil.html';
                         },
                         preDeny: () => {
+                            localStorage.removeItem('token');//cerrar sesion
                             window.location.href = 'login.html';
                         }
 
@@ -166,6 +167,7 @@ document.getElementById('registroForm').addEventListener('submit', function(even
                             denyButtonText: 'Probar otro email',
                             cancelButtonText: 'Ir a catalogo',
                             preConfirm: () => {
+                                localStorage.removeItem('token');//cerrar sesion
                                 window.location.href = 'login.html';
                             },
                             preDeny: () => {

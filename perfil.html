@@ -86,13 +86,14 @@
                 <div class="col text-center">
                     <h2>Perfil</h2>
                     <!-- Formulario para completar el perfil -->
-                    <form id="perfilForm" class="my-3">
+                    <form id="perfilForm" class="my-3" enctype="multipart/form-data">
                         <!-- Datos ya ingreados durante el registro de usuario -->
                         <div class="row">
                             <div class="col-md-3">
                                 <div>
-                                    <label for="imagen_perfil" class="form-label">Imagen</label>
-                                    <input type="longblob" id="imagen_perfil" class="d-flex my-2 form-control" placeholder="imagen">
+                                    <label for="imagen_link" class="form-label">Imagen</label>
+                                    <input type="file" class="d-flex my-2 form-control" id="imagen_link" accept="image/*">
+                                    <small class="form-text text-muted">Imagen de 500 KB máx. y dimensiones de 1024x1024 máx.</small>
                                 </div>
                             </div>
                             <div class="col-md-3">

@@ -22,7 +22,7 @@
             </div>
             <div class="contenedor-header-buscador">
                 <form class="d-flex" rol="search">
-                    <input class="form-control me-1" type="search" placeholder="Busque libro" aria-label="Search">
+                    <input class="form-control me-1" id="search" name="search" type="search" placeholder="Busque libro" aria-label="Search">
                     <button class="btn btn-outline-danger btn-buscador" type="submit"><i class="bi bi-search"></i></button>
                 </form>
             </div>
@@ -83,7 +83,7 @@
                     <form id="loginForm" class="my-3">
                         <div>
                             <label for="email" class="text-start">Ingrese mail
-                                <input type="text" id="email" class="d-flex my-2 form-control" placeholder="example@email.com" required autocomplete="email"><!-- Se cambia type para que permita ñ -->
+                                <input type="text" id="email" name="email" class="d-flex my-2 form-control" placeholder="example@email.com" required autocomplete="new-email"><!-- Se cambia type para que permita ñ -->
                                 <div id="errorEmail" class="invalid-feedback" style="color: red;"></div>
                             </label>
                         </div>
@@ -92,7 +92,7 @@
                             <label for="password" class="text-start">Ingrese contraseña
                                 <div class="input-container">
                                     <div class="input-wrapper">
-                                        <input type="password" id="password" class="d-flex my-2 form-control" placeholder="Contraseña" required autocomplete="new-password">
+                                        <input type="password" id="password" name="password" class="d-flex my-2 form-control" placeholder="Contraseña" required autocomplete="new-password">
                                             <button type="button" id="togglePassword" class="btn btn-secondary">
                                                 <i id="passwordIcon" class="fa fa-eye"></i>
                                             </button>
@@ -108,13 +108,13 @@
 
                     </form>
 
-                    <div class="col-md-0">
+                    <div>
+                        <label for="forgotPassword" class="form-label">No recuerdo la contraseña</label>
                         <div>
-                            <label for="password" class="form-label">No recuerdo la contraseña</label>
-                            <a href="index.html" class="d-block my-2"><h5>[cambiar o recuperar contraseña]</h5></a>
+                            <button type="button" id="forgotPassword" name="forgotPassword" class="btn btn-warning mt-0">Cambiar contraseña</button>
                         </div>
                     </div>
-                    
+                
                 </div>
             </div>
         </div>
@@ -148,7 +148,25 @@
     <script src="js/sweetalert2.all.min.js"></script>    
     <script src="js/common.js"></script>
     <script src="js/login.js"></script>
+    
+    <script>// Carga condicional de password.js solo si el usuario quiere cambiar contraseña
+        document.addEventListener('DOMContentLoaded', function() {// Espera a que el documento este completamente cargado
+            const forgotPasswordButton = document.getElementById('forgotPassword');// Obtiene referencia al boton "Cambiar contraseña"
+            if (forgotPasswordButton) {// Agrega un event listener para cargar password.js solo cuando se hace clic en el boton
+                forgotPasswordButton.addEventListener('click', function() {
+                    const script = document.createElement('script'); // Carga el script password.js dinamicamente
+                    script.src = 'js/password.js';
+                    document.body.appendChild(script);
+                    console.log('Script password.js cargado.');// borrar
+                });
+            } else {
+                console.error('Botón "Cambiar contraseña" no encontrado.');
+            }
+        });
+    </script>
+
 </body>
 
 </html>
+
 

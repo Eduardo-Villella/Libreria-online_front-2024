@@ -5,7 +5,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         const token = localStorage.getItem('token');// Obtiene token desde localStorange guardado alli en el momento de login o registro
 
         if (!token) {
-            throw new Error('1 en perfil: No hay token disponible');// Borrar Manejar error para mostar al usuario
+            Swal.fire({
+                icon: 'warning',
+                title: 'Sesión caducada',
+                text: 'Tu sesión ha caducado. Por favor, inicia sesión nuevamente.',
+                confirmButtonText: 'Iniciar sesión'
+            }).then(() => {
+                // Aquí puedes redirigir al usuario a la página de inicio de sesión
+                localStorage.removeItem('token');
+                window.location.href = '/login';
+            });
+            //throw new Error('1 en perfil: No hay token disponible');// Borrar Manejar error para mostar al usuario
         }
 
         const configResponse = await fetch('http://localhost:3000/api/config');//Obtiene la configuracion del backend desde front.static.routes.js
@@ -67,8 +77,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.log('usuario element:', document.getElementById('pais'), userData.pais);// borrar
             document.getElementById('codigo_postal').value = userData.codigo_postal || '';
             console.log('usuario element:', document.getElementById('codigo_postal'), userData.codigo_postal);// borrar
-            document.getElementById('imagen_perfil').value = userData.imagen_perfil || '';
-            console.log('usuario element:', document.getElementById('imagen_perfil'), userData.imagen_perfil);// borrar
+            document.getElementById('imagen_link').value = userData.imagen_link || '';
+            console.log('usuario element:', document.getElementById('imagen_link'), userData.imagen_link);// borrar
         } else {
             console.error('en perfil.js el if de data: El formato de los datos no es correcto o los datos están vacíos.');
             console.log('perfil.js data.result que no entra al if:', data); // Imprime data.result para verificar qué contiene
@@ -81,7 +91,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const usuario = document.getElementById('usuario') ? document.getElementById('usuario').textContent.trim() : '';
             const email = document.getElementById('email') ? document.getElementById('email').textContent.trim() : '';
-            //const passwor = document.getElementById('password') ? document.getElementById('password').textContent.trim() : '';// habilitar si se habilita en htmlñ y mas arriba donde se muestran los datos
+            //const passwor = document.getElementById('password') ? document.getElementById('password').textContent.trim() : '';// habilitar si se habilita en html y mas arriba donde se muestran los datos
             
             //const id_usuarios = document.getElementById('id_usuarios') ? document.getElementById('id_usuarios').textContent.trim() : '';/*admin*/ // No permitido en DB
             const rol = document.getElementById('rol') ? document.getElementById('rol').textContent.trim() : '';/*admin*/
@@ -96,7 +106,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const provincia = document.getElementById('provincia').value.trim();
             const pais = document.getElementById('pais').value.trim();
             const codigoPostal = document.getElementById('codigo_postal').value.trim();
-            const imagen_perfil = document.getElementById('imagen_perfil').value.trim();
+            const imagen_link = document.getElementById('imagen_link').value.trim();
 
             const formData = {
                 usuario,
@@ -115,7 +125,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 provincia: provincia || undefined,
                 pais: pais || undefined,
                 codigo_postal: codigoPostal || undefined,
-                imagen_perfil: imagen_perfil || undefined
+                imagen_link: imagen_link || undefined
             };
 
             // Filtrar datos vacíos para no enviarlos

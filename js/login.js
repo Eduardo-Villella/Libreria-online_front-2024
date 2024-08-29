@@ -74,19 +74,23 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
                     },
                     body: JSON.stringify(formData)
                 });
+                
             })
             .then(response => {
-                console.log('en login.js: Respuesta recibida del endpoint de login:', response);
+                console.log('en login.js then RESPONSE: Respuesta recibida del endpoint de login response:', response);
                 return response.json().then(data => ({
                     status: response.status,
                     body: data
                 }));
             })
             .then(data => {
-                console.log('en login.js: Respuesta del backend en front:', data);// BORRAR una vez comprobado
+                console.log('en login.js then data: Respuesta UNO del backend en front:', data);// BORRAR una vez comprobado
                 if (data.body.success) {
+                    console.log('en login.js if data.body.success: Respuesta TOKEN del backend en front:', data.body.token, typeof(data.body.token));// BORRAR una vez comprobado
                     localStorage.setItem('token', data.body.token);
+                    console.log('en login.js if data.body.success: Respuesta SUCCESS del backend en front:', data.body.success, typeof(data.body.success));// BORRAR una vez comprobado
                     if (data.body.isAdmin) {
+                        console.log('en login.js if data.body.isAdmin: Respuesta DOS del backend en front:', data.body.isAdmin, typeof(data.body.isAdmin));// BORRAR una vez comprobado
                         Swal.fire({
                             icon: 'success',
                             title: '¡Bienvenido Administrador!',
@@ -119,6 +123,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
                         });
                        
                     } else {
+                        console.log('en login.js if data.body.isAdmin: Respuesta TRES del backend en front:', data.body.isAdmin, typeof(data.body.isAdmin));// BORRAR una vez comprobado
                         Swal.fire({
                             icon: 'success',
                             title: '¡Bienvenido!',
@@ -128,13 +133,13 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
                             showCancelButton: true,
                             showDenyButton: true,
                             confirmButtonText: 'Ir a Mi Perfil',
-                            denyButtonText: 'Salir',
-                            cancelButtonText: 'Ver catalogo',
+                            denyButtonText: 'Ver catalogo',
+                            cancelButtonText: 'Salir',
                             preConfirm: () => {
                                 window.location.href = 'perfil.html';
                             },
                             preDeny: () => {
-                                window.location.href = 'index.html';
+                                window.location.href = 'catalogo.html';
                             }
 
                         }).then((result) => {
@@ -143,7 +148,8 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
                                 window.location.href = 'index.html';
                                 
                             } else if (result.dismiss === Swal.DismissReason.cancel) {
-                                window.location.href = 'catalogo.html';
+                                logout();
+                                window.location.href = 'index.html';
                             }
 
                         });
@@ -194,7 +200,20 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
                         denyButtonText: 'Reintentar',
                         cancelButtonText: 'Salir',
                         preConfirm: () => {
-                            window.location.href = 'nosotros.html';
+                            // Carga dinamica del script password.js
+                            const script = document.createElement('script');
+                            script.src = 'js/password.js';
+                            document.body.appendChild(script);
+
+                            // Simula el clic en el boton "Cambiar contraseña"
+                           /* script.onload = () => {
+                                const forgotPasswordButton = document.getElementById('forgotPassword');
+                                if (forgotPasswordButton) {
+                                    forgotPasswordButton.click();
+                                } else {
+                                    console.error('Botón "Cambiar contraseña" no encontrado.');
+                                }
+                            };*/
                         },
                         preDeny: () => {
                             password.classList.add('is-invalid');
@@ -235,4 +254,5 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
 
     
 });
+
 

@@ -137,9 +137,14 @@ HEAD
     border-color: #4A3E64;
 }
 
-.btn-success, .btn-secondary{/*Boton menu */
-    background-color: #4A3E64 !important;
-    border-color: #4A3E64 !important;
+.btn-secondary{/*Boton menu */
+    background-color: #381a79 !important;
+    border-color: #381a79 !important;
+}
+
+.btn-success{/*Boton menu */
+    background-color: #32a04e !important;
+    border-color: #32a04e !important;
 }
 
 .btn-close:hover{
