@@ -1,215 +1,232 @@
+* {
+    box-sizing: border-box !important; /* Asegura que el padding y el border se incluyan en el ancho y alto total */
+}
+
 body {
-    display: flex;
+    display: flex; /* flex de flexbox para manejar todo dinamicamente sin depender de medidas fijas */
     height: 100vh;
     background-color: aliceblue;
+    margin: 0;
+    padding: 0;
 }
 
-li a{
-    color: grey !important;
-}
-
-li .active:hover{
-    color: #E35164 !important;
-}
-
+/* SIDEBAR */
 #sidebar {
-    width: 170px;
-    transition: all 0.3s;
+    flex: 0 1 200px; /* El sidebar ocupará un ancho base de 200px pero puede reducirse */
+    min-width: 50px; /* El ancho mínimo del sidebar será 50px */
+    max-width: 200px; /* El ancho máximo será de 200px */
+    position: sticky; /* Fija el sidebar en la pantalla */
+    top: 0;
+    left: 0;
+    height: 100vh; /* Asegura que el sidebar ocupe toda la altura de la ventana */
     background-color: #4A3E64 !important;
+    transition: all 0.3s;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: inherit;
 }
-
 #sidebar.collapsed {
     width: 0;
 }
-
 #sidebar.sidebar-hidden {
     display: none; /* Oculta la barra lateral completamente */
 }
-
-#content {
-    flex-grow: 1;
-    padding: 3px;
-    overflow: auto;
+.p-4 {
+    padding: 10px !important;
 }
-
-#toggle-btn {
-    margin-right: auto;
+/* Controla los link dentro de la barra vertical */
+.nav.flex-column {
+    margin: 10px;
+    padding-left: 10px;
 }
-
-.navbar {
-    display: flex;
-    justify-content: space-between; /* Asegura que los elementos estén espaciados */
-    align-items: center;
-    position: sticky; /* Fija el encabezado en la pantalla */
-    top: 0; /* Coloca el encabezado en la parte superior de la página */
-    left: auto; /* Coloca el encabezado en la parte izquierda de la página */
-    width: auto; /* Resta el ancho de la sidebar activa (170px) */
-    backdrop-filter: blur(5px); /* Aplica un desenfoque al contenido detrás del encabezado */
-    background: rgba(225, 195, 255, 0.3); /* Fondo color semitransparente */
-    box-shadow: 0 4px 8px rgba(210, 180, 240, 1.9); /* Agrega una sombra para mejorar la visibilidad */
-    z-index: 2000; /* Asegura que el encabezado esté por encima de otros elementos */
-    padding: 2px 10px;
+.nav-item {
+    width: 100%;
+    display: flex !important; /* Hace que el <li> se comporte como un contenedor flexible */
+    flex-direction: column; /* Asegura que el contenido dentro se apile verticalmente */
+    padding: 0px;  /* Evita cualquier padding innecesario */
+    border-radius: 8px;
 }
-
-.bg-light {
-    --bs-bg-opacity: 0;
+#nav-link {
+    display: flex !important;  /* Hace que el enlace también sea flexible */
+    align-items: center; /* Asegura que el texto esté centrado verticalmente */
+    padding: 10px 5px 10px 3px;  /* Amplía el área clicable */
+    text-decoration: none;  /* Sin subrayado en el texto */
+    border-radius: inherit;
+    transition: background-color 0.3s; /* Suaviza la transición del color de fondo en hover */
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+    flex-grow: 1; /* Hace que el enlace ocupe todo el espacio disponible */
+    flex-basis: auto;
 }
-
-HEAD
-.navbar-expand-lg{
-    background-color: #4A3E64 !important;
-    margin: 0;
-    padding: 5px;
-}
-
-.nav {
-    --bs-nav-link-padding-x: 0.7rem;
-}
-
-.nav-item:hover{
+/* Hover para la lista sidebar */
+.nav-item:hover {
     background-color: #0D6EFD;
-    border-radius: 10px;
-}
-
-.navbar-brand {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    margin-top: 3px; /* Ajusta el margen superior para elevar el logo */
-    margin-bottom: 3px; /* Ajusta el margen inferior para reducir el espacio */
-}
-
-/* ---- Icono perfil usuario ---- */
-
-.perfil-container {
-    display: inline-block;
+    border-radius: 8px;
+    font-weight: bold; /* Aplica negrita */
+    text-decoration: underline; /* Aplica subrayado */
     align-items: center;
-    position: relative;
-    z-index: 2000;
+    width: auto; /* Mantiene el ancho ajustado al texto */
 }
+/* ---- Fin sidebar ---- */
 
+
+/* CONTENT AREA */
+/* ESPECIALES INCLUIDOS EN BARRA */
+/* Icono perfil usuario */
+.perfil-container {
+    display: flex;
+    position: relative;
+    justify-content: center; /* Centra el contenido horizontalmente */
+    align-items: flex-end; /* Maneja el contenido verticalmente */
+    text-align: center;
+    margin-left: auto;
+    margin-right: 10%;
+}
 .perfil-pic {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     cursor: pointer;
     transition: background-color 0.3s ease; /* Agrega una transición suave al color de fondo */
-    margin-left: 15px; /* Espacio entre el ícono y el texto */
+    /*margin-left: 15px; /* Espacio entre el ícono y el texto */
 }
-
 .perfil-pic:hover {
     background-color: rgb(227, 81, 100);
 }
-
 .perfil-hover-message {
     display: none;
     position: absolute;
-    top: 100%;
-    left: 50%;
+    top: 100%; /* Asegura que el mensaje aparezca justo debajo del icono */
+    left: 20%; /* Mueve el mensaje hacia la mitad del icono */
     transform: translateX(-40%); /* Centra el mensaje horizontalmente */
-    background-color: rgb(23, 42, 218);
-    padding: 5px;
+    background-color: rgb(52, 64, 167);
+    padding: 3px;
     margin-top: 3px; /* Espacio entre el icono y el mensaje */
+    justify-content: center;
+    align-items: center;
     border-radius: 4px;
-    white-space: nowrap;
+    white-space: pre; /* Permite saltos de línea */
     font-size: 12px;
     font-weight: bold;
     color: white;
-    z-index: 2000;
 }
-
 .perfil-container:hover .perfil-hover-message {
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-/* ---- Fin icono perfil usuario ---- */
-
-#image-preview{
-    display: none;
+/* Menu Perfil */
+.dropdown-menu {
+    background-color: rgb(220, 204, 240);
+    border: 1px solid #300747;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    position: absolute;
+    margin-top: 3px; /* Espacio entre el icono y el mensaje */
 }
-
-.btn-danger{
-    background-color: #E35164 !important;
-    border-color: #E35164 !important;
+.dropdown-item {
+    padding: 8px 12px;
+    cursor: pointer;
 }
-
-.btn-primary{/* Botones cards */
-    background-color: #4A3E64;
-    border-color: #4A3E64;
+.dropdown-item:hover {
+    background-color: #4c6fe0; /* Efecto hover */
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
 }
+/* ---- Fin Icono perfil usuario ---- */
 
-.btn-secondary{/*Boton menu */
-    background-color: #381a79 !important;
-    border-color: #381a79 !important;
+/* Content area, filas topbar */
+#content {
+    position: relative;
+    flex: 1 1 100%; /* El elemento ocupa un ancho base fijo pero puede reducirse */
+    top: 0;
+    left: 0;
+    height: 100vh; /* Asegura que el elemento ocupe toda la altura de la ventana */
+    min-width: 80px; /* El ancho minimo del sidebar será 80px */
+    max-width: 100%; /* El ancho maximo será de 100% */
+    padding: 0px;
+    transition: all 0.3s ease;
+    overflow-y: auto; /* Permite el scroll vertical agregar si es necesario */
 }
-
-.btn-success{/*Boton menu */
-    background-color: #32a04e !important;
-    border-color: #32a04e !important;
+#sidebar.collapsed + #content {
+    margin-left: 0;
+    width: 100%;
+ }
+/* Asegura que la topbar siempre esté visible y fija */
+#topbar {
+    position: sticky;
+    width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(225, 195, 255, 0.3); /* Fondo color semitransparente */
+    backdrop-filter: blur(5px); /* Aplica un desenfoque al contenido detrás del encabezado */
+    z-index: 2; /* Topbar 2, controla tambien menu click icono perfil */
 }
-
-.btn-close:hover{
-    background-color: #E35164 !important;
-}
-
-.modal-body{
-    background-color: aliceblue;
-}
-
-.detalles, .agregar{
-    color: #4A3E64;
-}
-
-.detalles{
-    height: auto;
-}
-
-.detalles .col-md-8{
+/* Estilo para ajustar el contenido del topbar */
+.navbar {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    padding: 0 !important;
+    padding-bottom: 5px !important;
 }
-
-.detalles .col-md-4{
-    text-align: center;
-}
-
-.detalles .col-md-4 img{
-    border: 2px solid #448A92;
-}
-
-.agregar form{
+/* Primera fila (Botón, Logo, Perfil) */
+.navbar > .d-flex:first-child {
     width: 100%;
 }
+/* Alinear y espaciar correctamente los elementos de la primera fila */
+/* Boton sidebar */
+#toggle-btn {
+    margin-right: auto;
+    margin-left: 1%;
+    background-color: #4A3E64 !important;
+    border-color: #4A3E64 !important;
+}
+.navbar-brand {
+    margin: 0 auto;
+}
+/* Segunda fila (Buscar y Nuevo Usuario) */
+.navbar > .d-flex.mt-2 {
+    padding: 0px 15px;
+    margin-top: 0 !important;
+}
+/* Alineación y distribución del buscador y botón de nuevo usuario */
+.col-md-6 {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.col-md-6.text-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* ---- Fin content area general ---- */
 
-/*  Cards de Administracion Inicio */
+/* Content area MAIN Administracion dashboard */
+/* Cards administracion principal */
 /* Estilo base para las tarjetas */
-
 .card {
-    height: 100%; /* Ajustar a la altura maxima del contenedor */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    opacity: 99%; /* Opacidad base de las tarjetas */
+    height: 100%; /* Ajustar a la altura maxima del contenedor */
+    opacity: 80%; /* Opacidad base de las tarjetas */
     transition: transform 0.3s ease, opacity 0.3s ease;
 }
-
 .card:hover {/* Efecto de opacidad y aumento en hover */
     opacity: 1; /* Elimina la opacidad en hover */
     transform: scale(1.1); /* Aumenta ligeramente el tamaño de la tarjeta */
     box-shadow: 0 0 10px rgba(63, 61, 233, 0.836); /* Contorno difuminado naranja */
 }
-
 /* Asegurar que todas las imagenes tengan el mismo tamaño y esten centradas */
-
 .card-img-top {
     object-fit: cover; /* Ajusta la imagen para que cubra el contenedor */
     width: 100%; /* Asegura que la imagen ocupa todo el ancho del contenedor */
     height: 200px; /* Altura fija para todas las imagenes */
     display: block; /* Elimina espacios adicionales debajo de la imagen */
 }
-
 /* Titulos centrados y ajustables */
-
 .card-title {
     text-align: center;
     font-size: 2rem; /* Ajusta el tamaño del título */
@@ -217,78 +234,305 @@ HEAD
     margin: 0.5rem 0; /* Espaciado alrededor del título */
     transition: color 0.3s ease, font-weight 0.3s ease; /* Transición suave para color y peso */
 }
-
 .card:hover .card-title {
     color: blue; /* Cambia el color del título en hover */
     font-weight: bold; /* Cambia el peso del título en hover */
 }
-
-/* Texto explicativo alineado a la izquierda y ajustable */
-
+/* Card parte inferior Texto explicativo alineado a la izquierda y ajustable */
 .card-text {
     text-align: left;
     font-size: 1rem; /* Ajusta el tamaño del texto */
     color: #000000; /* Ajusta el color del texto */
 }
-
 .card-body {
     text-align: right;
     background-color: #f3e5fa; /* Fondo base para la parte de abajo de la tarjeta */
     padding: 1rem; /* Espaciado alrededor del contenido */
 }
-
-.card:hover .card-body {
+.card:hover .card-body, #cardBodyClosed{
     background-color: #dcfddc; /* Fondo verde muy claro en hover */
 }
-
+.card:hover #cardBodyClosed{
+    background-color: #dcfddc; /* Fondo verde muy claro en hover */
+}
 .card-body .btn-primary {
     /*background-color: #007bff; /* Ajusta el color del botón */
     /*border-color: #007bff; /* Ajusta el color del borde del botón */
     color: #fff; /* Ajusta el color del texto del botón */
     transition: background-color 0.3s ease, color 0.3s ease; /* Transición suave para el botón */
 }
-
 .card:hover .card-body .btn-primary {
     background-color: #0056b3 !important; /* Color del fondo del botón en hover */
     border-color: #004085 !important; /* Color del borde del botón en hover */
     color: #fff !important; /* Color del texto del botón en hover */
     font-weight: bold; /* Negritas para el texto del botón en hover */
 }
-
 /* Imagen de card Cerrar Salir */
-
-.card:hover #admin_out_image {
-    filter: brightness(30%); /* Apaga las luces de la imagen */
+#cardBodyClosed {
+    background-color: #dd5252; /* Fondo base para la parte de abajo de la tarjeta */
 }
-
+.card:hover #admin_out_image {
+    filter: brightness(20%); /* Apaga las luces de la imagen */
+    transition: filter 2s ease-in-out; /* Aplica el filtro gradualmente en 2 segundos */
+    transition-delay: 1s; /* Espera 1 segundo antes de comenzar */
+}
 #admin_out_image {
     transition: filter 0.3s ease; /* Transición suave del filtro */
 }
+/* ---- Fin cards ---- */
 
-/* Administracion USERS */
-
-.mt-4{
-    margin-left: 5px;
+/* ----- Estilos para tabla de usuarios ----- */
+.mt-5 {
+    margin-top: 5px !important;
 }
-
-table {
-    width: auto; /* Cambia a auto para que la tabla mantenga su tamaño según el contenido */
-    table-layout: fixed; /* Fija el ancho de las columnas */
-    max-width: 100%; /* Asegura que no exceda el ancho de su contenedor */
-    overflow-x: auto; /* Permite el desplazamiento horizontal */
+.table {
+    table-layout: fixed; /* Esto asegura que los anchos se apliquen correctamente */
+    width: 100%; /* Asegura que la tabla ocupe todo el ancho disponible */
 }
-
-th, td {
-    width: 200px; /* Establece un ancho fijo para las columnas */
-    /*word-wrap: break-word; /* Permite que el texto largo se divida en varias líneas */
-    /*white-space: nowrap; /* Evita que el texto se divida en varias líneas */
-    padding: 10px; /* Espacio interno para las celdas */
-    /*text-align: center; /* Cambia según tus necesidades */
+/* Fija la primera fila de la tabla de Titulos cuando se hace scroll y Estilo para las celdas del encabezado (th) */
+.table thead th {
+    position: sticky;
+    top: var(--dynamic-top, 0); /* Valor de top dinámico */
+    width: 170px;
+    background-color: #7673f3; /* Color de fondo del encabezado */
+    color: white; /* Color del texto */
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border-bottom: 2px solid #ddd;
+    padding: 6px 2px !important;
+    z-index: 1; /* Topbar 2; Fila titulos .table thead th 1 */
+}
+/* Limita el ancho del contenido largo y agrega puntos suspensivos  y da estilos */
+.table th, .table td {
+    vertical-align: middle; /* Asegura que el contenido se alinee verticalmente */
+    text-align: center;
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
     overflow: hidden; /* Oculta el contenido que excede el área de la celda */
     text-overflow: ellipsis; /* Muestra "..." si el texto es demasiado largo */
 }
+/* FILAS Ajustes para las celdas del cuerpo (td) */
+.table tbody td {
+    padding: 3px;
+    border-bottom: 1px solid #ddd; /* Linea sutil entre las filas */
+    text-align: left;
+}
+/* FILAS Estilos para las filas de la tabla */
+.table tbody tr {
+    transition: background-color 0.3s ease; /* Transición suave al cambiar color de fondo */
+}
+/* FILAS Sombreado al pasar el mouse sobre una fila */
+.table tbody tr:hover td {
+    background-color: #b4f1b9 !important; /* Color de fondo en hover */
+    font-weight: bold;
+}
+/* Estilos para la fila cuando se ha hecho clic */
+.table tbody tr.selected td {
+    background-color: rgb(12, 158, 19) !important; /* Color de fondo al hacer clic */
+    font-weight: bold; /* Hacer el texto en negrita */
+}
+/* COLUMNAS Define el ancho de las columnas de la tabla */
+/* Fija la primera colunba de la tabla cuando se hace scroll y estilo para las celdas "Acciones" */
+/* Acciones */
+.table th:nth-child(1), .table td:nth-child(1) {
+    position: sticky;
+    left: 0; /* Fija la columna en el borde izquierdo */
+    width: 120px;
+    background-color: #7673f3; /* Color de fondo del encabezado */
+    border-bottom: 2px solid #ddd;
+    text-align: center;
+    white-space: wrap; /* Permite el uso de múltiples líneas */
+}
+/* Botones de acción: estilos especifico para las celdas */
+#viewAllUsers, #viewThisUser, #deleteUser {
+    font-size: 12px;
+    padding: 2px 4px;
+    margin: 2px;
+    border-radius: 8px; /* Bordes redondeados */
+    opacity: 90%; /* Opacidad base de las tarjetas */
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+/* Hover botones */
+#viewAllUsers:hover, #viewThisUser:hover, #deleteUser:hover {
+    opacity: 1; /* Hacer que los botones se vuelvan ligeramente transparentes al pasar el ratón */
+    transform: scale(1.2); /* Aumenta ligeramente el tamaño de la tarjeta */
+    box-shadow: 0 0 15px rgba(3, 247, 15, 0.836); /* Contorno difuminado naranja */
+}
+/* Columna de la imagen */
+.table th:nth-child(2), .table td:nth-child(2) { 
+    width: 70px; 
+    text-align: center;
+}
+/* Nombre imagen */
+.table th:nth-child(3), .table td:nth-child(3) { 
+    width: 150px;
+    padding-left: 15px;
+}
+/* ID */
+.table th:nth-child(4), .table td:nth-child(4) { 
+    width: 50px;
+    text-align: center; 
+}
+/*.table th:nth-child(4), .table td:nth-child(4) {
+    width: 120px; /* Usuario */
+/*}
+.table th:nth-child(5), .table td:nth-child(4) {
+    width: 120px; /* Email */
+/*}
+.table th:nth-child(6), .table td:nth-child(4) {
+    width: 10px; /* Contraseña */
+/*}
+/* ... continuar por numero de cada columna */
 
-td {
-    align-content: center;
+
+/* ESPECIALES incluidos en tablas y modales */
+/* OJO en contraseña en admin new user */
+.input-container {
+    position: relative;
+    width: 100%;
+}
+.input-wrapper {
+    align-items: center;
+    position: relative;
+    width: 100%;
+}
+#password, #confirmPassword {
+    width: 100%;
+}
+#errorPassword , #errorConfirmPassword{
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    margin-top: 5px; /* Ajusta según sea necesario */
+    color: red;
+}
+#togglePassword, #toggleConfirmPassword {
+    position: absolute;
+    top: 50%;
+    right: 2rem; /* Ajusta el espacio segun sea necesario */
+    transform: translateY(-46%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: rgb(161, 158, 158);
+    padding-right: 0.018rem; /* Espacio para el icono */
+    z-index: 1; /* Ojo contraseña 1 Asegura de que el icono esta arriba del campo */
+}
+#passwordIcon, #confirmPasswordIcon {
+    font-size: 1.2rem; /* Ajusta el tamaño del icono si es necesario */
+}
+#forgotPassword {
+    margin-top: 2px; /* Reducir margen superior */
+    padding: 5px 10px; /* Reducir padding */
+    text-transform: none !important; /* Mantiene el texto en su formato original */
+    font-size: 14px; /* Ajusta el tamaño de la fuente */
+    font-weight: bold; /* Ajusta el peso de la fuente si es necesario */
+    background-color: #ffcc00; /* Cambia el color de fondo del botón */
+    color: #000; /* Cambia el color del texto */
+}
+/* ---- Fin icono ojo contraseña ---- */
+
+/* Botones en general */
+/* Ajuste del botón de búsqueda */
+.btn-search {
+    background-color: #4A3E64;
+    color: rgb(220, 223, 176);
+    border: none;
+}
+.btn-search:hover {
+    background-color: #72b64b;
+}
+/* Boton danger */
+.btn-danger{
+    background-color: #E35164 !important;
+    border-color: #E35164 !important;
 }
 
+/* RESPONSIVE */
+/* Sidebar en pantallas medianas */
+@media (max-width: 768px) {
+    #sidebar {
+        flex-basis: 150px;
+    }
+}
+/* Sidebar en pantallas pequeñas */
+@media (max-width: 576px) {
+    #sidebar {
+        flex-basis: 100px;
+    }
+}
+/* Sidebar en pantallas muy pequeñas o móviles */
+@media (max-width: 400px) {
+    #sidebar {
+        flex-basis: 50px;
+    }
+}
+/* Fin responsive Sidebar */
+
+/* Content area */
+/* Ajustes responsivos para la barra de búsqueda y botón */
+/* Topbar en pantallas medianas */
+@media (max-width: 768px) {
+    /* Ajustes generales para el contenido del topbar */
+    .navbar-brand img {
+        width: 30px;
+        height: 30px;
+    }
+    .perfil-container {
+        margin-right: 10px;
+    }
+    .navbar > .d-flex.mt-2 {
+        flex-direction: column;
+        align-items: flex-start; /* Cambia a columna */
+        padding-top: 10px; /* Añade un poco de espacio si es necesario */
+    }
+    /* Ajusta las alturas de los elementos si es necesario */
+    .col-md-6.text-center {
+        justify-content: center; /* Alinea correctamente los elementos */
+        width: 100%; /* Elimina cualquier restricción de ancho */
+    }
+}
+/* Topbar en pantallas pequeñas */
+@media (max-width: 576px) {
+    /* Sidebar más pequeño */
+    #sidebar {
+        flex-basis: 100px;
+    }
+    .perfil-pic {
+        width: 35px;
+        height: 35px;
+    }
+    /* Distribución de la barra superior */
+    .navbar > .d-flex.mt-2 {
+        flex-direction: column; /* Columna para pantallas pequeñas */
+        align-items: flex-start;
+    }
+    .input-group {
+        width: 100%; /* Asegura que el input ocupe todo el ancho */
+        margin-bottom: 10px;
+    }
+    .col-md-6.text-center {
+        justify-content: flex-start;
+        width: 100%;
+    }
+}
+/* Topbar en pantallas muy pequeñas (400px o menos) */
+@media (max-width: 400px) {
+    #sidebar {
+        flex-basis: 50px; /* Sidebar mínimo */
+    }
+    .perfil-pic {
+        width: 30px;
+        height: 30px;
+    }
+    .navbar-brand img {
+        width: 25px;
+        height: 25px;
+    }
+    .navbar > .d-flex:first-child {
+        flex-direction: column;
+        align-items: center; /* Centra los elementos de la primera fila */
+        justify-content: center;
+    }
+}

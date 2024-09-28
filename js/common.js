@@ -3,9 +3,14 @@
     // icono ojo contraseña
     // icono perfil usuario
     // sidebar administracion
-    // validacion de email y contraseña
-    // recuperar contraseña
+    // manejo de sesion y token en peticiones y/o envios http
+    // manejo y formato de fechas
+    // validacion de datos
+    // manejo dinamico de topbar y tabla allUsers
+    // seleccion de una flia de la tabla allusers
 
+    // ya no estan:
+        // recuperar contraseña
 /* ------------------------------------------------------------------------------------------- */
 
 // Funcion para logout: elimina token del localStorage y redirige
@@ -75,8 +80,22 @@ document.addEventListener('DOMContentLoaded', async function () {
     const perfilHoverMessage = document.getElementById('perfilHoverMessage');
     const dropdownMenu = document.getElementById('dropdownMenu');
     
-    const baseUrl = 'http://localhost:3000/api';
+    const baseUrl = 'http://localhost:3000/api/4.Upload/users';
     const isLoggedIn = localStorage.getItem('token');// Verifica si el usuario esta logueado
+    const token = localStorage.getItem('token');// Verifica si el usuario esta logueado
+
+    if (!token) {
+        localStorage.removeItem('token');// Elimina el token invalido del almacenamiento local
+        Swal.fire({
+            icon: 'warning',
+            title: 'La sesión expiró o no estás logueado',
+            timer: 1500, // Se cerrara automaticamente despues de ... "1000" = 1 segundo
+            showConfirmButton: false, // Oculta el botón de confirmacion
+            toast: true, // Opcion para que sea mas pequeño como un toast
+            position: 'center' // Posicion de la notificacion
+        });
+        
+    }
 
     if (isLoggedIn) {
         // Realizamos una solicitud para obtener la informacion del usuario
@@ -88,23 +107,30 @@ document.addEventListener('DOMContentLoaded', async function () {
         })
         
         if (!response.ok) {
-            //const errorMessage = await response.text();
-            //console.error('en common.js, !token: Error al obtener el usuario:', errorMessage);
-            //alert('No se pudo obtener la información del usuario.');
-            if (response.status === 401) {
-                localStorage.removeItem('token');// Elimina el token invalido del almacenamiento local
-               Swal.fire({
-                    icon: 'warning',
-                    title: 'Sesión caducada',
-                    text: 'Tu sesión ha caducado. Por favor, inicia sesión nuevamente.',
-                    confirmButtonText: 'Iniciar sesión'
-                }).then(() => {
-                    window.location.href = 'login.html';
-                });
-                throw new Error(`Error: ${response.statusText}`);
+            try{
+                if (response.status === 401 || response.status === 403) {
+                    localStorage.removeItem('token');// Elimina el token invalido del almacenamiento local
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'La sesión expiró',
+                        text: 'Tu sesión ha expirado. Por favor, inicia sesión nuevamente.',
+                        confirmButtonText: 'Iniciar sesión'
+                    }).then(() => {
+                        window.location.href = 'login.html';
+                    });
+
+                    return; // Salimos si hay un error
+                }
+                
+                console.error(`Error: ${response.statusText}`);// borrar
+                
+
+            } catch (error) {
+                console.error('Error en el manejo de la respuesta:', error.message);
             }
-        
-            //return; // Salimos si hay un error
+
+            return; // Salimos si hay un error
+
         }
 
         const data = await response.json();// Devuelve la respuesta como un objeto JSON
@@ -114,9 +140,9 @@ document.addEventListener('DOMContentLoaded', async function () {
             console.log('en common primer then if user y tipo: :', user, typeof(user)); //borrar Log de los datos del usuario
         
         // Mostrar imagen de perfil del usuario
-        perfilPic.src = `${baseUrl}/${user.imagen_link}`; // '../image/user_icons8-usuario-de-género-neutro.gif'; // Cambia por la foto del perfil del usuario (a futuro, por ahora cambia a gif)
+        perfilPic.src = `${baseUrl}/${user.imagen_name}`; // '../image/user_icons8-usuario-de-género-neutro.gif'; // Cambia por la foto del perfil del usuario (a futuro, por ahora cambia a gif)
             console.log('Base URL:', baseUrl);// borrar
-            console.log('Image Path:', user.imagen_link);// borrar
+            console.log('Image Path:', user.imagen_name);// borrar
             console.log('Full Image URL:', perfilPic.src);// borrar
         perfilHoverMessage.textContent = 'Perfil';
     
@@ -138,12 +164,24 @@ document.addEventListener('DOMContentLoaded', async function () {
 
             // Crear opciones del menu
             const opciones = [
-                { text: 'Perfil', href: 'perfil.html' },
-                ...(userRol === 'Administrador' 
-                    ? [{ text: 'Administración', href: 'admin_dashboard.html' }] 
-                    : [{ text: 'Otros', href: 'index.html' }]),
-                { text: 'Cerrar sesión', action: () => {
-                    localStorage.removeItem('token'); // Cerrar sesion
+                { text: 'Perfil', href: 'perfil.html' }, // Visible para todos los roles
+                ...(  user.rol === 'Administrador' 
+                        ? [
+                            { text: 'Administración', href: 'admin_dashboard.html' },
+                            { text: 'Gestión de usuarios', href: 'admin_users.html' }
+                            // Al finalizar, completar con todas las gestiones
+                    ]
+                    : user.rol === 'Cliente'
+                        ? [
+                            { text: 'Mis compras', href: 'mis_compras.html' },
+                            { text: 'Historial de compras', href: 'historial_compras.html' }
+                    ]
+                    :     [// Caso de otro rol por defecto
+                            { text: 'Otros', href: 'index.html' }
+                    ]
+                ), 
+                { text: 'Cerrar sesión', action: () => {// Visible para todos los roles
+                    localStorage.removeItem('token');
                     window.location.href = 'index.html';
                 }}
             ];
@@ -177,7 +215,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             dropdownMenu.style.position = 'absolute';
             dropdownMenu.style.top = `${rect.bottom}}px`;
             dropdownMenu.style.left = '50%'; // Centrar horizontalmente
-            dropdownMenu.style.transform = 'translateX(-50%)'; // Desplazar a la izquierda la mitad de su ancho
+            dropdownMenu.style.transform = 'translateX(-60%)'; // Desplazar a la izquierda la mitad de su ancho
             console.log('Menú creado:', dropdownMenu); // borrar Verifica si el menú se crea correctamente
             console.log('Menu en el DOM:', document.body.contains(dropdownMenu)); // borrar Verifica si el menú está en el DOM
 
@@ -198,7 +236,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         perfilHoverMessage.textContent = 'Ingresar';
         perfilPic.addEventListener('click', () => {
             localStorage.removeItem('token');//cerrar sesion
-            window.location.href = 'login.html';
+            window.location.href = 'login.html';//redige a login
         });
     }
 
@@ -216,207 +254,233 @@ toggleBtn.addEventListener('click', function() {
 
 /* ------------------------------------------------------------------------------------------- */
 
-// Funciones para validar email, contraseña y confirmación de contraseña
-/*
-// Valida email
-function validateEmailSwal(emailElement, errorElement) {
-    const emailValue = emailElement.value.trim();
-    if (!/^[\wñÑ](?:[\wñÑ._-]*[\wñÑ])?@[A-Za-z0-9](?:[A-Za-z0-9.-]*[A-Za-z0-9])?\.[A-Za-z]{2,}$/.test(emailValue)) {
-        errorElement.textContent = 'El email debe ser válido: SI "@ . - _" y NO "espacios blancos" ';
-        emailElement.classList.add('is-invalid');
-        return false;
+// Funcion para manejar respuestas de token y sesiones en peticiones y/o envios http
+async function sesionTokenError(response) {
+    if (response.ok) {
+        return true;// Si la respuesta es OK, continuar normalmente
+    }
+
+    // Si no es ok, manejo de diferentes tipos de errores
+    let title = '';
+    let text = '';
+    let redirectUrl = '';
+
+    switch (response.status) {
+        case 401:
+            title = 'Debe estar logueado';
+            text = 'Por favor, inicie sesión para continuar.';
+            redirectUrl = 'login.html';
+            break;
+        case 400:
+            title = 'Su sesión no es válida';
+            text = 'Será redirigido a la página principal.';
+            redirectUrl = 'index.html';
+            break;
+        case 403:
+            title = 'Su sesión expiró';
+            text = 'Por favor, loguéese nuevamente.';
+            redirectUrl = 'login.html';
+            break;
+        case 500:
+            title = 'Hubo un error';
+            text = 'Por favor, inténtelo nuevamente.';
+            redirectUrl = 'login.html';
+            break;
+        case 422: // Manejo el error de validacion aqui
+        const errorData = await response.json();
+        await Swal.fire({
+            icon: 'error',
+            title: 'Error de validación',
+            text: `Datos inválidos: ${errorData.error}`,
+            confirmButtonText: 'OK'
+        });
+        return false; // Detiene el flujo si es un error de validacion
+        default:
+            title = 'Se encontró un error';
+            text = 'Un error inesperado, ha ocurrido. Vuelva a intentarlo';
+            redirectUrl = 'index.html';
+            break;
+    }
+
+    // Muestra la alerta y espera a que el usuario la cierre antes de redirigir
+    await Swal.fire({
+        icon: 'error',
+        title: title,
+        text: text,
+        confirmButtonText: 'OK'
+    }).then(() => {
+        // Despues de que se cierra la alerta, redirige al usuario
+        localStorage.removeItem('token'); // cerrar sesion
+        window.location.href = redirectUrl;
+    });
+
+    return false; // Interrumpir el flujo original
+}
+
+/* ------------------------------------------------------------------------------------------- */
+
+// Funcion para manejar fechas y su formato con Pikaday
+function formatDatePika(elementId) {
+    var element = document.getElementById(elementId);
+    
+    if (element) {
+        var picker = new Pikaday({
+            field: document.getElementById(elementId),
+            format: 'DD-MM-YYYY', // Formato de fecha
+            i18n: {
+                previousMonth: 'Mes anterior',
+                nextMonth: 'Mes siguiente',
+                months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                weekdays: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']
+            },
+            toString(date, format) {
+                return moment(date).format('dddd D [de] MMMM [de] YYYY');// Aqui en format se personaliza como se muestra la fecha en el input
+            }
+        });
     } else {
-        errorElement.textContent = '';
-        emailElement.classList.remove('is-invalid');
-        return true;
+        console.warn(`Elemento con ID ${elementId} no encontrado.`);
     }
 }
 
-// Valida password
-function validatePasswordSwal(passwordElement, errorElement) {
-    const passwordValue = passwordElement.value.trim();
-    if (passwordValue.length < 8) {
-        errorElement.textContent = 'La contraseña debe tener al menos 8 caracteres.';
-        passwordElement.classList.add('is-invalid');
-        return false;
-    } else {
-        errorElement.textContent = '';
-        passwordElement.classList.remove('is-invalid');
-        return true;
-    }
+function formatDatePikaDay(elementIds) {// Funcion para inicializar multiples datepickers
+    elementIds.forEach(id => formatDatePika(id));
 }
 
-// Valida confirmacion de password
-function validateConfirmPasswordSwal(confirmPasswordElement, passwordElement, errorElement) {
-    const confirmPasswordValue = confirmPasswordElement.value.trim();
-    const passwordValue = passwordElement.value.trim();
-    if (confirmPasswordValue !== passwordValue || confirmPasswordValue === '') {
-        errorElement.textContent = 'Las contraseñas no coinciden.';
-        confirmPasswordElement.classList.add('is-invalid');
-        return false;
-    } else {
-        errorElement.textContent = '';
-        confirmPasswordElement.classList.remove('is-invalid');
-        return true;
-    }
-}
-
-// Función para habilitar o deshabilitar el botón "Continuar"
-function checkFormValidity(emailSwal, passwordSwal, confirmPasswordSwal, errorEmailSwal, errorPasswordSwal, errorConfirmPasswordSwal) {
-    const emailValid = validateEmailSwal(emailSwal, errorEmailSwal);
-    const passwordValid = validatePasswordSwal(passwordSwal, errorPasswordSwal);
-    const confirmPasswordValid = validateConfirmPasswordSwal(confirmPasswordSwal, passwordSwal, errorConfirmPasswordSwal);
-
-    // Deshabilita o habilita el botón "Continuar" según la validez de los campos
-    const confirmButton = document.querySelector('.swal2-confirm');
-    if (confirmButton) {
-        confirmButton.disabled = !(emailValid && passwordValid && confirmPasswordValid);
-    }
-}
-
-// Envío de recuperación de contraseña
 document.addEventListener('DOMContentLoaded', function() {
-    const forgotPasswordButton = document.getElementById('forgotPassword');
-    console.log('4 Botón olvidó contraseña encontrado:', forgotPasswordButton);
+    formatDatePikaDay([
+        'viewUserDate',
+        'editUserFechaNacimiento',
+        'addUserFechaNacimiento', 
+        'fecha_nacimiento'
+    ]);
+});
 
-    if (forgotPasswordButton) {
-        forgotPasswordButton.addEventListener('click', function() {
-            console.log('5 Botón de recuperar contraseña clickeado');
-            
-            Swal.fire({
-                title: 'Cambiar Contraseña',
-                html: `
-                <form id="passwordForm">
-                <div>
-                    <input type="text" id="newEmail" class="swal2-input" placeholder="Ingrese su email" required autocomplete="email" style="width: 80%;">
-                    <div id="errorEmail" class="invalid-feedback" style="color: red;"></div>
-                </div>
-                <div>
-                    <input type="password" id="newPassword" class="swal2-input" placeholder="Nueva Contraseña" required autocomplete="new-password" style="width: 80%;">
-                    <div id="errorPassword" class="invalid-feedback" style="color: red;"></div>
-                </div>
-                <div>
-                    <input type="password" id="confirmPassword" class="swal2-input" placeholder="Confirmar Nueva Contraseña" required autocomplete="new-password" style="width: 80%;">
-                    <div id="errorConfirmPassword" class="invalid-feedback" style="color: red;"></div>
-                </div>
-                </form>
-                `,
-                confirmButtonText: 'Continuar',
-                focusConfirm: false,
-                didOpen: () => {
-                    // Captura los elementos después de abrir el Swal
-                    const emailSwal = document.getElementById('newEmail');
-                    const passwordSwal = document.getElementById('newPassword');
-                    const confirmPasswordSwal = document.getElementById('confirmPassword');
-                    const errorEmailSwal = document.getElementById('errorEmail');
-                    const errorPasswordSwal = document.getElementById('errorPassword');
-                    const errorConfirmPasswordSwal = document.getElementById('errorConfirmPassword');
-                    
-                    console.log('didOpen: Elementos capturados');
-                    console.log('didOpen 1 emailSwal.value: ', emailSwal.value);// borrar
-                    console.log('didOpen 1 passwordSwal.value : ', passwordSwal.value);// borrar
-                    console.log('didOpen 1 confirmPasswordSwal.value  :', confirmPasswordSwal.value);// borrar
-                    console.log('didOpen 1 errorEmailSwal.value :', errorEmailSwal.value);// borrar
-                    console.log('didOpen 1 errorPasswordSwal.value :', errorPasswordSwal.value);// borrar
-                    console.log('didOpen 1 errorConfirmPasswordSwal.value, :', errorConfirmPasswordSwal.value);// borrar
+/* ------------------------------------------------------------------------------------------- */
 
-                    // Agrega event listeners para validación en tiempo real
-                    emailSwal.addEventListener('blur', () => {
-                        validateEmailSwal(emailSwal, errorEmailSwal);
-                        checkFormValidity(emailSwal, passwordSwal, confirmPasswordSwal, errorEmailSwal, errorPasswordSwal, errorConfirmPasswordSwal);
-                    });
+//FUNCIONES DE VALIDACION DE DATOS INGRESADOS
+// Valida usuario
+function validateUsuario(event) {
+    if (!event) {
+        console.error("en common.js El evento USUARIO no fue pasado correctamente");
+        return false;
+    }
+        console.log("en common.js Evento USUARIO blur capturado", event);  // borrar Verifica que el evento se captura
+    const usuario = event.target; // Escucha el input que dispara el evento
+    const errorUsuario = document.getElementById(`error${usuario.id.charAt(0).toUpperCase() + usuario.id.slice(1)}`);// Obtengo el error basado en el id del campo de usuario
+        console.log('en common.js Validando usuario:', usuario.value); // borrar Ver el valor ingresado
+        console.log('en common.js Clase del usuario antes de validación:', usuario.classList); // Ver clases aplicadas
+    const usuarioValue = usuario.value.trim();
+    if (usuarioValue.length < 5 || !/^[\wñÑ\s._-]+$/.test(usuarioValue) || /\s{2,}/.test(usuarioValue)) {// Regex (!/^[\wñÑ\s._-]+$/) -regular expresion- su uso es excelente para determinar filtros
+        errorUsuario.textContent = 'El nombre de usuario debe tener al menos 5 caracteres';
+        usuario.classList.add('is-invalid');
+            console.log('en common.js Clase del usuario después de validación fallida:', usuario.classList); // borrar Ver clases tras fallo
+        return false;
+    } else {
+        errorUsuario.textContent = '';// Limpia mensaje de error si es valido
+        usuario.classList.remove('is-invalid');
+            console.log('en common.js Clase del usuario después de validación exitosa:', usuario.classList); // borrar Ver clases tras éxito
+        return true;
+    }
+}
+// Valida email
+function validateEmail(event) {
+    if (!event) {
+        console.error("en common.js El evento EMAIL no fue pasado correctamente");
+        return false;
+    }
+        console.log("en common.js Evento EMAIL blur capturado", event);  // borrar Verifica que el evento se captura
+    const email = event.target; // Escucha el input que dispara el evento
+    const errorEmail = document.getElementById('errorEmail');
+    const emailValue = email.value.trim();
+        console.log('en common.js Validando email:', email.value); // borrar Ver el valor ingresado
+    if (!/^[\wñÑ](?:[\wñÑ._-]*[\wñÑ])?@[A-Za-z0-9](?:[A-Za-z0-9.-]*[A-Za-z0-9])?\.[A-Za-z]{2,}$/.test(emailValue)) {
+        errorEmail.textContent = 'El email debe ser válido, SI "@ . - _" y NO "espacios blancos" ';
+        email.classList.add('is-invalid');
+        return false;
+    } else {
+        errorEmail.textContent = '';
+        email.classList.remove('is-invalid');
+        return true;
+    }
+}
+// Valida contraseña
+function validatePassword(event) {
+    if (!event) {
+        console.error("en common.js El evento PASSWORD no fue pasado correctamente");
+        return false;
+    }
+    console.log("en common.js Evento PASSWORD blur capturado", event);  // borrar Verifica que el evento se captura
+    const password = event.target;
+    const errorPassword = document.getElementById('errorPassword');
+    const passwordValue = password.value.trim();
+    if (passwordValue.length < 8) {
+        errorPassword.textContent = 'La contraseña debe tener al menos 8 caracteres.';
+        password.classList.add('is-invalid');
+        return false;
+    } else {
+        errorPassword.textContent = '';
+        password.classList.remove('is-invalid');
+        return true;
+    }
+}
+// Valida confirmación de contraseña
+function validateConfirmPassword(event) {
+    if (!event) {
+        console.error("en common.js El evento CONFIRMPASSWORD no fue pasado correctamente");
+        return false;
+    }
+    console.log("en common.js Evento CONFIRMPASSWORD blur capturado", event);  // borrar Verifica que el evento se captura
+    const confirmPassword = event.target;
+    const errorConfirmPassword = document.getElementById('errorConfirmPassword');
+    const confirmPasswordValue = confirmPassword.value.trim();
+    const passwordValue = password.value.trim();
+    if (confirmPasswordValue !== passwordValue || confirmPasswordValue === '') {
+        errorConfirmPassword.textContent = 'Las contraseñas no coinciden.';
+        confirmPassword.classList.add('is-invalid');
+        return false;
+    } else {
+        errorConfirmPassword.textContent = '';
+        confirmPassword.classList.remove('is-invalid');
+        return true;
+    }
+}
+
+/* ------------------------------------------------------------------------------------------- */
+
+// MANEJO DINAMICO ENCABEZADO Y TABLA ALLUSERS
+window.addEventListener('DOMContentLoaded', function() {
+    // Selecciona la topbar, el thead de la tabla y margin del contenedor mt-5
+    const topbar = document.getElementById('topbar');
+    const tableHead = document.querySelector('.table thead th');
+    const marginElement = document.querySelector('.mt-5'); // Selecciona el elemento con la clase .mt-5
+
+    // Si topbar y marginElement existen, calcula su altura
+    if (topbar && tableHead && marginElement) {
+        const topbarHeight = topbar.offsetHeight; // Altura de la topbar
+        const marginTop = parseFloat(getComputedStyle(marginElement).marginTop) || 0; 
+        
+        // Asigna la suma de totalTopbarHeight y marginTop a la propiedad CSS 'top' usando una variable CSS
+        document.documentElement.style.setProperty('--dynamic-top', `${topbarHeight + marginTop}px`);
+    }
+});
+
+// Selecciona todas las filas del cuerpo de la tabla
+document.addEventListener("DOMContentLoaded", function() {
+    const tableBody = document.querySelector('.table tbody');
+    if (tableBody) { // Verifica que el elemento existe
+        tableBody.addEventListener('click', function(event) {
+            // Verifica que el clic proviene de un TD
+            if (event.target.tagName === 'TD') {
+                const clickedRow = event.target.parentNode; // Obtener la fila (tr) desde la celda (td)
                 
-                    passwordSwal.addEventListener('blur', () => {
-                        validatePasswordSwal(passwordSwal, errorPasswordSwal);
-                        checkFormValidity(emailSwal, passwordSwal, confirmPasswordSwal, errorEmailSwal, errorPasswordSwal, errorConfirmPasswordSwal);
-                    });
+                // Quitar la clase 'selected' de todas las filas
+                document.querySelectorAll('.table tbody tr').forEach(row => row.classList.remove('selected'));
                 
-                    confirmPasswordSwal.addEventListener('blur', () => {
-                        validateConfirmPasswordSwal(confirmPasswordSwal, passwordSwal, errorConfirmPasswordSwal);
-                        checkFormValidity(emailSwal, passwordSwal, confirmPasswordSwal, errorEmailSwal, errorPasswordSwal, errorConfirmPasswordSwal);
-                    });
-
-                    // LLamamos a la función para habilitar o deshabilitar el botón "Continuar"
-                    checkFormValidity(emailSwal, passwordSwal, confirmPasswordSwal, errorEmailSwal, errorPasswordSwal, errorConfirmPasswordSwal);
-                },
-                preConfirm: () => {
-                    console.log('PRECONFIRM: Formulario en preConfirm');
-                    const emailSwal = document.getElementById('newEmail');
-                    const passwordSwal = document.getElementById('newPassword');
-                    const confirmPasswordSwal = document.getElementById('confirmPassword');
-
-                    const emailValid = validateEmailSwal(emailSwal, document.getElementById('errorEmail'));
-                    const passwordValid = validatePasswordSwal(passwordSwal, document.getElementById('errorPassword'));
-                    const confirmPasswordValid = validateConfirmPasswordSwal(confirmPasswordSwal, passwordSwal, document.getElementById('errorConfirmPassword'));
-
-                    if (!emailValid) {
-                        Swal.showValidationMessage('El email no es válido.');
-                        return false;
-                    }
-            
-                    if (!passwordValid) {
-                        Swal.showValidationMessage('La contraseña no es válida.');
-                        return false;
-                    }
-            
-                    if (!confirmPasswordValid) {
-                        Swal.showValidationMessage('Las contraseñas no coinciden.');
-                        return false;
-                    }
-
-                    return {
-                        email: emailSwal.value,
-                        password: passwordSwal.value
-                    };
-                }
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire({
-                        title: 'Ingrese el código de verificación',
-                        html: `<form></form><input type="password" id="verifyPassword" class="swal2-input" placeholder="Código de verificación"></form>`,
-                        confirmButtonText: 'Enviar',
-                        preConfirm: () => {
-                            const verifyPassword = document.getElementById('verifyPassword').value;
-                            if (verifyPassword !== result.value.password) {
-                                Swal.showValidationMessage('El código no es correcto');
-                                return false;
-                            }
-
-                            return verifyPassword;
-                        }
-                    }).then((verifyResult) => {
-                        if (verifyResult.isConfirmed) {
-                            fetch('http://localhost:3000/api/users/updatePass', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'Authorization': 'Bearer ' + localStorage.getItem('token')
-                                },
-                                body: JSON.stringify({
-                                    email: result.value.email,
-                                    password: verifyResult.value
-                                })
-                            })
-                            .then(response => response.json())
-                            .then(data => {
-                                if (data.success) {
-                                    Swal.fire('Éxito', 'Su nueva contraseña ha sido activada', 'success').then(() => {
-                                        window.location.href = 'login.html';
-                                    });
-                                } else {
-                                    Swal.fire('Error', data.message, 'error');
-                                }
-                            })
-                            .catch(error => {
-                                Swal.fire('Error', 'No se pudo actualizar la contraseña', 'error');
-                            });
-                        }
-                    });
-                }
-            });
+                // Agregar la clase 'selected' a la fila clicada
+                clickedRow.classList.add('selected');
+            }
         });
     }
 });
-*/
-/* ------------------------------------------------------------------------------------------- */
-

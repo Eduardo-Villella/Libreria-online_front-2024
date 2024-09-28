@@ -63,9 +63,11 @@ a{
 /* ---- Icono perfil usuario ---- */
 
 .perfil-container {
-    position: relative;
     display: inline-block;
+    align-items: center;
+    position: relative;
     z-index: 2000;
+    margin-left: auto;
 }
 
 .perfil-pic {
@@ -285,15 +287,15 @@ a{
 
 /* PERFIL */
 
-input[type="date" i] {
+/*input {
     font-family: monospace;
     padding-inline-start: 1px;
-    cursor: default;
-    overflow: hidden;
+    cursor: pointer; /* Cambia a pointer para indicar interactividad */
+    /*overflow: hidden;
     padding: .375rem .75rem;
     color: blue;
-    display: ruby-text !important;
-}
+    display: inline-block; /* Ajusta según sea necesario */
+/*}*/
 
 /* LOGIN - REGISTRO : ojo en contraseña */
 
