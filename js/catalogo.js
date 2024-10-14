@@ -1,5 +1,3 @@
-/* */
-
 function splitOnWords(text) {
     const numberOfWords = 20;
     const words = text.split(' ');
@@ -22,7 +20,7 @@ async function loadCatalog() {
         const cardTemplate = await loadCardTemplate();
         console.log('Card template loaded:', cardTemplate);
 
-        const response = await fetch('http://localhost:3000/api/books');  // Reemplazar con la URL real de la API http://34.46.27.106:3000 = http://localhost:3000 reemplazar
+        const response = await fetch('http://localhost:3000/api/books');
         if (!response.ok) {
             throw new Error('Error al cargar el catálogo');
         }
@@ -37,22 +35,24 @@ async function loadCatalog() {
 
         books.forEach(book => {
             let cardHTML = cardTemplate
-                .replace('{IMAGE_URL}', book.imagen_link)
+                .replace('{IMAGE_URL}', `${baseUrl}/4.Upload/books/${book.imagen_link}`)
                 .replace('{BOOK_TITLE}', book.nombre)
                 .replace('{BOOK_AUTHORS}', `${splitOnWords(book.descripcion)}....`)
                 .replace('{BOOK_ISB}', '') // Si hay un valor de ISB, reemplazar aquí
-                .replace('{BOOK_PRICE}', book.precio);
+                .replace('{BOOK_PRICE}', book.precio)
+                .replace('{BOOK_ID}', book.id_libros); // Reemplaza el ID en el botón de ojo
 
             const cardElement = document.createElement('div');
             cardElement.innerHTML = cardHTML;
             console.log('Card HTML:', cardHTML);
-
             // Agregar la tarjeta al contenedor
             container.appendChild(cardElement.firstElementChild);
         });
+
     } catch (error) {
         console.error('Error:', error);
     }
+
 }
 
 // Cargar el catálogo cuando el DOM esté completamente cargado

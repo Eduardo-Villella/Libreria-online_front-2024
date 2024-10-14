@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         
         if (!response.ok) {
             try{
-                if (response.status === 401 || response.status === 403) {
+                if (response.status === 401 || response.status === 401) {
                     localStorage.removeItem('token');// Elimina el token invalido del almacenamiento local
                     Swal.fire({
                         icon: 'warning',
@@ -277,8 +277,8 @@ async function sesionTokenError(response) {
             redirectUrl = 'index.html';
             break;
         case 403:
-            title = 'Su sesión expiró';
-            text = 'Por favor, loguéese nuevamente.';
+            title = 'No tienes permisos adecuados';
+            text = 'Por favor, loguéese correctamente.';
             redirectUrl = 'login.html';
             break;
         case 500:

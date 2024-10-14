@@ -90,6 +90,37 @@
                 
             </div>
         </div>
+        <!-- Modal para ver detalles de un libro en particular -->
+        <div class="modal fade detalles" id="viewBookModal" tabindex="-1" aria-labelledby="viewBookModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="viewBookModalLabel">Detalles del Libro</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h5><strong>ID: </strong><span id="viewBookID"></span></h5>
+                                    <h5><strong>Título: </strong><span id="viewBookName"></span></h5>
+                                    <h5><strong>Categoría: </strong><span id="viewBookCategory"></span></h5>
+                                    <h5><strong>Editorial: </strong><span id="viewBookPublisher"></span></h5>
+                                    <h5><strong>Precio: </strong><span id="viewBookPrice"></span></h5>
+                                    <h5><strong>Stock: </strong><span id="viewBookStock"></span></h5>
+                                    <h5><strong>Descripción:</strong> <span id="viewBookDescription"></span></h5>
+                                    <h5><strong>Status:</strong> <span id="viewBookStatus"></span></h5>
+                                </div>
+                                <div class="col-md-4">
+                                    <span id="viewBookImagen" alt="Imagen del Libro" class="img-fluid"></span>
+                                    <h5><strong>Nombre Portada:</strong> <span id="viewBookImagenName"></span></h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
      <!-- FOOTER -->
@@ -121,9 +152,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/sweetalert2.all.min.js"></script>
     <script src="js/common.js"></script>
+    <!--<script src="js/viewBook_modal.js"></script>-->
+    <script src="js/books.js"></script>
     <script src="js/catalogo.js"></script>
     <script src="js/password.js"></script>
-    <!-- <script src="./js/api_requests.js"></script> -->
+
 
 </body>
 

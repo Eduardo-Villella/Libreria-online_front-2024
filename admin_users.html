@@ -66,7 +66,9 @@
                     </button>
                     <!-- Centered Title with Logo -->
                     <a class="navbar-brand mx-auto text-center" href="#">
-                        C E I J Libros<img src="image/logo-pagina.png" alt="" width="40px" height="40px">Administración
+                        <!--<marquee behavior="" direction="">behavior="scroll, slide o alternate" direction="right, left, down o up"-->
+                        Administración<img src="image/logo-pagina.png" alt="" width="40px" height="40px">Usuarios
+                        <!--</marquee>-->
                     </a>
                     <!-- Profile Section -->
                     <div class="perfil-container" id="perfilContainer">
@@ -283,6 +285,9 @@
                             <input type="file" class="form-control" id="addUserImage" name="file" accept="image/*">
                             <small class="form-text text-muted">Imagen de 500 KB máx. y dimensiones de 1024x1024 máx.</small>
                         </div>
+                        <div class="col-md-3"></div>
+                            <img src="" alt="preview" id="image-preview" class="img-thumbnail">
+                        </div>
                         <!--<div class="mb-3">
                             <label for="addUserLink" class="form-label">Link</label>
                             <input type="text" class="form-control" id="addUserLink" readonly>
@@ -388,7 +393,6 @@
     <script src="js/common.js"></script>
     <script src="js/users.js"></script>
     <script src="js/password.js"></script>
-    <!-- <script src="./js/api_requests.js"></script> -->
 
 </body>
 

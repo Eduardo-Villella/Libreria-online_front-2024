@@ -8,8 +8,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"><!-- Referencia a recursos externos, aqui carga recursos de bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"><!-- Referencia a recursos externos, aqui carga iconos de bootstrap -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><!-- Referencia a recursos externos, aqui carga recursos de font-awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css"><!-- Referencia a recursos externos, aqui carga recursos de Pikaday para formatos de date -->
     <link rel="stylesheet" href="./css/admin_styles.css"><!-- Referencia a recursos internos, aqui carga diseños del archivo css admin_styles -->
-    <title>C E I J Libros Administración Usuarios</title><!-- Titulo que aparece en la pestaña del navegador -->
+    <title>C E I J Libros Administración Libros</title><!-- Titulo que aparece en la pestaña del navegador -->
     <!-- Otras etiquetas comunes en el head -->
     <meta name="author" content="E V"><!-- Especifica el autor del documento -->
     <meta name="description" content="venta de libros"><!-- Proporciona una descripcion del contenido de la pagina, util para SEO -->
@@ -26,132 +27,112 @@
             <h4>Menu</h4>
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="admin_books.html">Libros</a>
+                    <a id="nav-link" class="nav-link text-white" href="admin_books.html">Libros</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="admin_users.html">Usuarios</a>
+                    <a id="nav-link" class="nav-link text-white" href="admin_users.html">Usuarios</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="Facturación.html">Facturación</a>
+                    <a id="nav-link" class="nav-link text-white" href="Facturación.html">Facturación</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="#">Pedidos</a>
+                    <a id="nav-link" class="nav-link text-white" href="#">Pedidos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="#">Envios</a>
+                    <a id="nav-link" class="nav-link text-white" href="#">Envios</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="catalogo.html">Catálogo</a>
+                    <a id="nav-link" class="nav-link text-white" href="catalogo.html">Catálogo</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="#">Otros</a>
+                    <a id="nav-link" class="nav-link text-white" href="#">Otros</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="admin_dashboard.html">Administración</a>
+                    <a id="nav-link" class="nav-link text-white" href="admin_dashboard.html">Administración</a>
                 </li>
             </ul>
         </div>
     </nav>
 
-    <!-- Page Content -->
+    <!-- Content Area -->
     <div id="content">
         <!-- Topbar -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <button id="toggle-btn" class="btn btn-secondary" type="button">
-                <i class="fas fa-bars"></i>
-            </button>
-
-            <a class="navbar-brand" href="#">Administración<img src="image/logo-pagina.png" alt="" width="40px" height="40px"> Libros</a>
-
-            <div class="perfil-container" id="perfilContainer">
-                <img src="image/user_account_circle_24dp_5F6368_FILL0_wght400_GRAD0_opsz48.png" id="perfilPic" alt="Perfil" class="perfil-pic">
-                <span class="perfil-hover-message" id="perfilHoverMessage">Perfil</span>
-            </div>
-        </nav>
-
-        <!-- Main Content -->
-        <div class="container mt-4">
-            <div class="row mb-3">
-                <div class="col">
-                    <input type="text" class="form-control" placeholder="Buscar libros...">
-                </div>
-                <div class="col-auto">
-                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addBookModal">Agregar Libro</button>
-                </div>
-            </div>
-
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Categoría</th>
-                        <th>Editorial</th>
-                        <th>Precio</th>
-                        <th>Stock</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody id="booksTableBody">
-                    <!-- Filas de libros generadas dinámicamente -->
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- Add Book Modal -->
-    <div class="modal fade agregar" id="addBookModal" tabindex="-1" aria-labelledby="addBookModalLabel"><!-- aria-hidden="true"-->
-        <div class="modal-dialog modal-fullscreen">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addBookModalLabel">Agregar Nuevo Libro</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body container-fluid">
-                    <div class="row">
-                        <form id="addBookForm" class="col-md-8 px-5" enctype="multipart/form-data">
-                            <div class="mb-3">
-                                <label for="bookTitle" class="form-label">Título</label>
-                                <input type="text" name="nombre" class="form-control" id="bookTitle" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="bookTitle" class="form-label">Editorial</label>
-                                <input type="text" name="editorial" class="form-control" id="bookEditorial" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="bookPrice" class="form-label">Precio</label>
-                                <input type="number" name="precio" class="form-control" id="bookPrice" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="bookCategory" class="form-label">Categoría</label>
-                                <select class="form-select" id="addBookCategory" name="categoria_id" required></select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="bookPrice" class="form-label">Stock</label>
-                                <input type="number" name="stock" class="form-control" id="bookPrice" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="bookDescription" class="form-label">Descripción</label>
-                                <textarea class="form-control" name="descripcion" id="bookDescription" rows="3"
-                                    required></textarea>
-                            </div>
-                            <div class="mb-3">
-                                <label for="bookImage" class="form-label">Imagen</label>
-                                <input type="file" class="form-control" name="imagen" id="bookImage" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Guardar</button>
-                        </form>
-                        <div class="col-md-4">
-                            <img src="none" alt="preview" id="image-preview" class="img-thumbnail" />
+        <div id="topbar">
+            <nav class="navbar navbar-expand-lg"><!-- elimio navbar-light bg-light para manejo de colores -->
+                <div class="d-flex w-100 align-items-center justify-content-between">
+                    <!-- Sidebar toggle button -->
+                    <button id="toggle-btn" class="btn btn-secondary" type="button">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <!-- Centered Title with Logo -->
+                    <a class="navbar-brand mx-auto text-center" href="#">
+                        <!--<marquee behavior="slide" direction="up">behavior="scroll, slide o alternate" direction="right, left, down o up"-->
+                        Administración<img src="image/logo-pagina.png" alt="" width="40px" height="40px">Libros
+                        <!--</marquee>-->
+                    </a>
+                    <!-- Profile Section -->
+                    <div class="perfil-container" id="perfilContainer">
+                        <img src="image/users/user-perfil-sinLogin.png" id="perfilPic" alt="Perfil" class="perfil-pic">
+                        <span class="perfil-hover-message" id="perfilHoverMessage">Perfil</span>
+                        <div class="dropdown-container" style="position: relative;">
+                            <div id="dropdownMenu" class="dropdown-menu" style="display: none;"></div> <!-- Contenedor para el menú -->
                         </div>
                     </div>
                 </div>
-            </div>
+                <!-- DESDE AQUI MOSTAR SOLO EN ADMIN_BOOK -->
+                <!-- New Row for Search and New User Button -->
+                <div class="d-flex w-100 mt-2 align-items-center justify-content-between">
+                    <!-- Search Input -->
+                    <div class="col-md-6 d-flex align-items-center"><!--agregado d-flex align-items-center-->
+                        <div class="input-group">
+                            <input type="text" id="buscarLibro" name="searchBook" class="form-control" placeholder="Buscar libros..." aria-label="Buscar libros">
+                            <button class="btn btn-search btn-sm" id="BotonSearchBook" type="button">
+                                <i class="fas fa-search"></i> Buscar
+                            </button>
+                        </div>
+                    </div>
+                    <!-- New Book Button -->
+                    <div class="col-md-6 text-center">
+                        <button class="btn btn-success btn-sm" id="botonNewBook" data-bs-toggle="modal" data-bs-target="#addBookModal">
+                            <i class="fas fa-plus"></i> Agregar Libro
+                        </button>
+                    <!-- Categories Button -->
+                        <button class="btn btn-danger btn-sm" id="botonAdminCategory">
+                            <i class="fas fa-plus"></i> Categorías
+                        </button><!-- data-bs-toggle="modal" data-bs-target="#adminCategoryModal"-->
+                    </div>
+                </div>
+                <!-- HASTA AQUI MOSTAR SOLO EN ADMIN_BOOK -->
+            </nav>
         </div>
-    </div>
+    
 
-    <!-- View Book Modal -->
-    <div class="modal fade detalles" id="viewBookModal" tabindex="-1" aria-labelledby="viewBookModalLabel"><!-- aria-hidden="true"-->
+        <!-- MAIN -->
+
+        <!-- Tabla ver todos los libros -->
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Acciones</th>
+                    <th>Portada</th>
+                    <th>Nombre imagen</th>
+                    <th>ID</th>
+                    <th>Título</th>
+                    <th>Categoría</th>
+                    <th>Editorial</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                    <th>Descripción</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="booksTableBody">
+                <!-- Filas de libros generadas dinámicamente -->
+            </tbody>
+        </table>
+        
+    <!-- Modal para ver un libro en particular en archivo viewBook_modal.html -->
+    <div class="modal fade detalles" id="viewBookModal" tabindex="-1" aria-labelledby="viewBookModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-fullscreen">
             <div class="modal-content">
                 <div class="modal-header">
@@ -163,15 +144,17 @@
                         <div class="row">
                             <div class="col-md-8">
                                 <h5><strong>ID: </strong><span id="viewBookID"></span></h5>
-                                <h5><strong>Nombre: </strong><span id="viewBookName"></span></h5>
+                                <h5><strong>Título: </strong><span id="viewBookName"></span></h5>
                                 <h5><strong>Categoría: </strong><span id="viewBookCategory"></span></h5>
                                 <h5><strong>Editorial: </strong><span id="viewBookPublisher"></span></h5>
                                 <h5><strong>Precio: </strong><span id="viewBookPrice"></span></h5>
                                 <h5><strong>Stock: </strong><span id="viewBookStock"></span></h5>
                                 <h5><strong>Descripción:</strong> <span id="viewBookDescription"></span></h5>
+                                <h5><strong>Status:</strong> <span id="viewBookStatus"></span></h5>
                             </div>
                             <div class="col-md-4">
-                                <img id="viewBookImage" alt="Imagen del Libro" class="img-fluid">
+                                <span id="viewBookImagen" alt="Imagen del Libro" class="img-fluid"></span>
+                                <h5><strong>Nombre Portada:</strong> <span id="viewBookImagenName"></span></h5>
                             </div>
                         </div>
                     </div>
@@ -180,13 +163,15 @@
         </div>
     </div>
 
+    
+
     <!-- Edit book Modal -->
-    <div class="modal fade" id="editBookModal" tabindex="-1" aria-labelledby="editBookModalLabel"><!-- aria-hidden="true"-->
+    <div class="modal fade" id="editBookModal" tabindex="-1" aria-labelledby="editBookModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-fullscreen">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="editBookModalLabel">Editar Libro</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" id="X-cerrar" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body container-fluid">
                     <div class="row">
@@ -195,38 +180,39 @@
                                 <input type="text" name="id" class="form-control" id="editar-id" readolnly>
                             </div>
                             <div class="mb-3">
-                                <label for="bookTitle" class="form-label">Título</label>
+                                <label for="bookTitle1" class="form-label">Título</label>
                                 <input type="text" name="nombre" class="form-control" id="bookTitle1" required>
                             </div>
                             <div class="mb-3">
-                                <label for="bookTitle" class="form-label">Editorial</label>
+                                <label for="bookEditorial1" class="form-label">Editorial</label>
                                 <input type="text" name="editorial" class="form-control" id="bookEditorial1" required>
                             </div>
                             <div class="mb-3">
-                                <label for="bookPrice" class="form-label">Precio</label>
+                                <label for="bookPrice1" class="form-label">Precio</label>
                                 <input type="number" name="precio" class="form-control" id="bookPrice1" required>
                             </div>
                             <div class="mb-3">
-                                <label for="bookCategory" class="form-label">Categoría</label>
-                                <select class="form-select" id="editBookCategory1" name="categoria_id" required></select>
+                                <label for="editBookCategory" class="form-label">Categoría</label>
+                                <select class="form-select" id="editBookCategory" name="categoria_id" required></select>
                             </div>
                             <div class="mb-3">
-                                <label for="bookPrice" class="form-label">Stock</label>
+                                <label for="bookStock1" class="form-label">Stock</label>
                                 <input type="number" name="stock" class="form-control" id="bookStock1" required>
                             </div>
                             <div class="mb-3">
-                                <label for="bookDescription" class="form-label">Descripción</label>
-                                <textarea class="form-control" name="descripcion" id="bookDescription1" rows="3"
-                                    required></textarea>
+                                <label for="bookDescription1" class="form-label">Descripción</label>
+                                <textarea class="form-control" name="descripcion" id="bookDescription1" rows="3" required>
+                                </textarea>
                             </div>
                             <div class="mb-3">
-                                <label for="bookImage" class="form-label">Imagen</label>
+                                <label for="editBookImage" class="form-label">Imagen</label>
                                 <input type="file" class="form-control" name="imagen" id="editBookImage" accept="image/*" required>
                             </div>
-                            <button type="submit" class="btn btn-primary">Actualizar</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" id="botonActualizarEdit" class="btn btn-primary">Actualizar</button>
                         </form>
                         <div class="col-md-4">
-                            <img src="none" alt="preview" id="image-preview-edit" class="img-thumbnail" />
+                            <img src="" alt="preview" id="image-preview-edit" class="img-thumbnail">
                         </div>
                     </div>
                 </div>
@@ -234,12 +220,73 @@
         </div>
     </div>
 
+    <!-- Add Book Modal -->
+    <div class="modal fade agregar" id="addBookModal" tabindex="-1" aria-labelledby="addBookModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addBookModalLabel">Agregar Nuevo Libro</h5>
+                    <button type="button" id="botonXcerrar" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body container-fluid">
+                    <div class="row">
+                        <form id="addBookForm" class="col-md-8 px-5" enctype="multipart/form-data">
+                            <div class="mb-3">
+                                <label for="bookTitle" class="form-label">Título</label>
+                                <input type="text" name="nombre" class="form-control" id="bookTitle" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="bookEditorial" class="form-label">Editorial</label>
+                                <input type="text" name="editorial" class="form-control" id="bookEditorial" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="bookPrice" class="form-label">Precio</label>
+                                <input type="number" name="precio" class="form-control" id="bookPrice" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="addBookCategory" class="form-label">Categoría</label>
+                                <select class="form-select" id="addBookCategory" name="categoria_id" required></select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="bookStock" class="form-label">Stock</label>
+                                <input type="number" name="stock" class="form-control" id="bookStock" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="bookDescription" class="form-label">Descripción</label>
+                                <textarea class="form-control" name="descripcion" id="bookDescription" rows="3"
+                                    required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="bookImage" class="form-label">Imagen</label>
+                                <input type="file" class="form-control" name="imagen" id="bookImage" required>
+                            </div>
+                            <button type="submit" id="botonGuardarNuevo" class="btn btn-primary">Guardar</button>
+                        </form>
+                        <div class="col-md-4">
+                            <img src="" alt="preview" id="image-preview" class="img-thumbnail">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal dinamico de Categorias -->
+    <div id="modalCategoriesContainer"></div>
+
+
     <!-- Script -->
 
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/min/moment.min.js"></script><!-- Moment.js para soporte de formateo de fechas -->
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/locale/es.js"></script><!-- Soporte para idioma español de moment -->
+    <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script><!-- Pikaday JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/sweetalert2.all.min.js"></script>
-    <script src="./js/api_requests.js"></script>
     <script src="js/common.js"></script>
+    <!--<script src="js/viewBook_modal.js"></script>-->
+    <script defer src="js/categoriesModal.js"></script>
+    <script defer src="js/books.js"></script>
+    <script src="js/password.js"></script>
     
 </body>
 

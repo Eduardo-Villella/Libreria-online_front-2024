@@ -781,8 +781,3 @@ document.getElementById('usersTableBody').addEventListener('click', async functi
     
 });
 
-
-        
-        //form.addEventListener('submit', handleSubmit);
-        //async function handleSubmit(e) {
-        //    e.preventDefault();

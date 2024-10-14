@@ -144,9 +144,11 @@ document.getElementById('registroForm').addEventListener('submit', function(even
                     }).then((result) => {
                         console.log('Resultado de dismiss:', result.dismiss);//borrar
                         if (result.dismiss === Swal.DismissReason.esc || result.dismiss === Swal.DismissReason.backdrop) {
-                                window.location.href = 'index.html';
+                            localStorage.removeItem('token');//cerrar sesion
+                            window.location.href = 'index.html';
                                 
                         } else if (result.dismiss === Swal.DismissReason.cancel) {
+                            localStorage.removeItem('token');//cerrar sesion
                             window.location.href = 'catalogo.html';
                         }
 
@@ -178,9 +180,11 @@ document.getElementById('registroForm').addEventListener('submit', function(even
                         }).then((result) => {
                             console.log('Resultado de dismiss:', result.dismiss);//borrar
                             if (result.dismiss === Swal.DismissReason.esc || result.dismiss === Swal.DismissReason.backdrop) {
-                                    window.location.href = 'index.html';
+                                localStorage.removeItem('token');//cerrar sesion
+                                window.location.href = 'index.html';
                                     
                             } else if (result.dismiss === Swal.DismissReason.cancel) {
+                                localStorage.removeItem('token');//cerrar sesion
                                 window.location.href = 'catalogo.html';
                             }
 

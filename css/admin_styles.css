@@ -46,7 +46,7 @@ body {
     padding: 0px;  /* Evita cualquier padding innecesario */
     border-radius: 8px;
 }
-#nav-link {
+.nav-link {
     display: flex !important;  /* Hace que el enlace también sea flexible */
     align-items: center; /* Asegura que el texto esté centrado verticalmente */
     padding: 10px 5px 10px 3px;  /* Amplía el área clicable */
@@ -198,7 +198,7 @@ body {
 }
 .col-md-6.text-center {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
 }
 /* ---- Fin content area general ---- */
@@ -427,7 +427,7 @@ body {
     padding: 5px 10px; /* Reducir padding */
     text-transform: none !important; /* Mantiene el texto en su formato original */
     font-size: 14px; /* Ajusta el tamaño de la fuente */
-    font-weight: bold; /* Ajusta el peso de la fuente si es necesario */
+    font-weight: bold; /* Ajusta el peso de la fuente */
     background-color: #ffcc00; /* Cambia el color de fondo del botón */
     color: #000; /* Cambia el color del texto */
 }
@@ -447,6 +447,12 @@ body {
 .btn-danger{
     background-color: #E35164 !important;
     border-color: #E35164 !important;
+}
+.btn-danger:hover {
+    background-color: #e71733 !important;
+    border-color: #e71733 !important;
+    font-weight: bold; /* Ajusta el peso de la fuente */
+    color: rgb(238, 255, 3);
 }
 
 /* RESPONSIVE */

@@ -1,0 +1,33 @@
+<!-- Admin Category Modal -->
+<div class="modal fade" id="adminCategoryModal" tabindex="-1" aria-labelledby="adminCategoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="adminCategoryModalLabel">Administrar Categorías</h5>
+                <button type="button" id="closeCategoryModal" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body container-fluid">
+                <div class="row">
+                    <div class="col-md-8">
+                        <form id="adminCategoryForm">
+                            <div class="mb-3">
+                                <label for="categoryName" class="form-label">Nombre de la Categoría</label>
+                                <input type="text" class="form-control" id="categoryName" name="nombre_cat" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="categoryId" class="form-label">ID de la Categoría (para editar)</label>
+                                <input type="text" class="form-control" id="categoryId" name="id_categoria" readonly>
+                            </div>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" id="botonGuardarCategoria" class="btn btn-primary">Guardar Categoría</button>
+                        </form>
+                    </div>
+                    <div class="col-md-4">
+                        <h5>Categorías Existentes</h5>
+                        <ul id="categoryList" class="list-group"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
